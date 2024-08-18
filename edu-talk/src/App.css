@@ -1,0 +1,79 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.app {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.language-button {
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 5px 10px;
+  background-color: white;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 250px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card-description {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.slider-container {
+  margin-top: 20px;
+  position: relative;
+  height: 40px;
+}
+
+.slider-track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+.slider-arrow {
+  position: absolute;
+  top: -16px;
+  width: 40px;
+  height: 40px;
+  background-color: #ff5757;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.slider-time {
+  margin-left: 10px;
+  font-size: 16px;
+}
