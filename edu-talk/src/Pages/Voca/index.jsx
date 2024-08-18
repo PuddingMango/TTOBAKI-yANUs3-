@@ -3,6 +3,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import CongratulationsModal from '../../components/CongratulationModal';
 import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
+import * as S from './styles';  // 스타일 파일 import
 
 const words = [
     '고등어',
@@ -18,11 +19,10 @@ const Voca = () => {
     const [showPronunciationModal, setShowPronunciationModal] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const [showPermissionModal, setShowPermissionModal] = useState(false);
-    const [recordings, setRecordings] = useState([]); // 녹음된 내역 저장
-    const [mediaRecorder, setMediaRecorder] = useState(null); // MediaRecorder 객체 저장
-    const [audioChunks, setAudioChunks] = useState([]); // 오디오 청크를 저장할 배열
+    const [recordings, setRecordings] = useState([]);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
+    const [audioChunks, setAudioChunks] = useState([]);
     const navigate = useNavigate();
-
     const {
         transcript,
         resetTranscript,
@@ -31,7 +31,6 @@ const Voca = () => {
     } = useSpeechRecognition();
 
     useEffect(() => {
-        // MediaRecorder 초기 설정
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
                 console.log("Microphone access granted");
@@ -45,15 +44,16 @@ const Voca = () => {
 
                 recorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    console.log("Final Blob size: ", audioBlob.size);  // Blob 크기 확인
                     const url = URL.createObjectURL(audioBlob);
+                    console.log("Final Blob size: ", audioBlob.size);
                     console.log("Audio URL: ", url);
-                    setRecordings(prev => [
-                        ...prev,
+
+                    setRecordings(prevRecordings => [
+                        ...prevRecordings,
                         {
                             word: words[currentWordIndex],
                             url,
-                            transcript // STT 변환된 텍스트 저장
+                            transcript: "" // 초기 상태에서는 빈 문자열로 설정
                         }
                     ]);
                     setAudioChunks([]); // 청크 초기화
@@ -77,28 +77,49 @@ const Voca = () => {
     const handleMicClick = () => {
         if (mediaRecorder && mediaRecorder.state === 'recording') {
             console.log("Stopping recording...");
-            mediaRecorder.stop();  // 녹음을 중지하고 데이터를 수집합니다.
-            SpeechRecognition.stopListening(); // STT 중지
+            mediaRecorder.stop();
+            SpeechRecognition.stopListening();
         } else {
             console.log("Starting recording...");
             resetTranscript();
-            setAudioChunks([]); // 녹음 시작 전에 청크를 초기화
-            SpeechRecognition.startListening({ continuous: true, language: 'ko-KR' }); // STT 시작
-            mediaRecorder.start();  // 녹음을 시작합니다.
+            setAudioChunks([]);
+            SpeechRecognition.startListening({ continuous: true, language: 'ko-KR' });
+            mediaRecorder.start();
         }
     };
 
     useEffect(() => {
         console.log("Transcript updated: ", transcript);
         if (transcript !== "") {
-            setRecordings(prev => prev.map((recording, index) => 
-                index === currentWordIndex ? { ...recording, transcript } : recording
-            ));
+            setRecordings(prevRecordings => {
+                const lastIndex = prevRecordings.length - 1;
+                if (lastIndex >= 0) {
+                    const updatedRecordings = [...prevRecordings];
+                    updatedRecordings[lastIndex] = {
+                        ...updatedRecordings[lastIndex],
+                        transcript: transcript
+                    };
+                    console.log("Updated recordings:", updatedRecordings);
+                    return updatedRecordings;
+                }
+                return prevRecordings;
+            });
         } else {
             console.error("STT 변환이 실패했습니다.");
         }
     }, [transcript]);
-    
+
+    // TTS를 실행하는 함수
+    const speakWord = (word) => {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'ko-KR'; // 한국어로 설정
+        window.speechSynthesis.speak(utterance);
+    };
+
+    useEffect(() => {
+        // 현재 단어를 읽음
+        speakWord(words[currentWordIndex]);
+    }, [currentWordIndex]);
 
     const handleNextWord = () => {
         console.log("Next word index: ", currentWordIndex + 1);
@@ -114,7 +135,7 @@ const Voca = () => {
         setShowConfetti(true);
         setTimeout(() => {
             setShowCompletionModal(true);
-        }, 2000); // Show modal after confetti
+        }, 2000);
     };
 
     const handleGoMainModal = () => {
@@ -122,7 +143,7 @@ const Voca = () => {
         setShowCompletionModal(false);
         setCurrentWordIndex(0);
         setShowConfetti(false);
-        navigate('/'); // Use navigate to go to the main page
+        navigate('/');
     };
 
     const handlePronunciationClick = () => {
@@ -137,48 +158,47 @@ const Voca = () => {
 
     const handleRefreshPage = () => {
         console.log("Refreshing page");
-        window.location.reload(); // 페이지 새로고침
+        window.location.reload();
     };
 
     const progress = (currentWordIndex / (words.length - 1)) * 100;
 
     return (
-        <div style={styles.container}>
-            {/* Top Progress Bar */}
-            <div style={styles.topBar}>
-                <div style={styles.progressContainer}>
-                    <div style={styles.progressIcon}>🎧</div>
-                    <div style={styles.progressBar}>
-                        <div style={{ ...styles.progress, width: `${progress}%` }}></div>
-                    </div>
-                    <div style={styles.progressText}>{currentWordIndex + 1}/{words.length}</div>
-                </div>
-                <div style={styles.settingsIcon}>⚙️</div>
-            </div>
+        <S.Container>
+            <S.TopBar>
+                <S.ProgressContainer>
+                    <S.ProgressIcon>🎧</S.ProgressIcon>
+                    <S.ProgressBar>
+                        <S.Progress width={progress} />
+                    </S.ProgressBar>
+                    <S.ProgressText>{currentWordIndex + 1}/{words.length}</S.ProgressText>
+                </S.ProgressContainer>
+                <S.SettingsIcon>⚙️</S.SettingsIcon>
+            </S.TopBar>
 
-            {/* Main Content Area */}
-            <div style={styles.mainContent}>
-                <div style={styles.speechBubble}>
+            <S.MainContent>
+                <S.SpeechBubble>
                     {words[currentWordIndex]}
-                </div>
-            </div>
+                </S.SpeechBubble>
+                {/* TTS 재생 버튼 */}
+                <S.ControlButton onClick={() => speakWord(words[currentWordIndex])}>
+                    다시 듣기 🔊
+                </S.ControlButton>
+            </S.MainContent>
 
-            {/* Microphone Button */}
-            <div style={styles.microphoneContainer}>
-                <div style={styles.microphoneButton} onClick={handleMicClick}>
+            <S.MicrophoneContainer>
+                <S.MicrophoneButton onClick={handleMicClick}>
                     {listening ? '녹음 중...' : '🎤'}
-                </div>
-            </div>
+                </S.MicrophoneButton>
+            </S.MicrophoneContainer>
 
-            {/* Bottom Controls */}
-            <div style={styles.bottomControls}>
-                <div style={styles.controlButton} onClick={handlePronunciationClick}>
+            <S.BottomControls>
+                <S.ControlButton onClick={handlePronunciationClick}>
                     <span role="img" aria-label="play">🔊</span>
-                    <div style={styles.controlText}>대화 내역</div>
-                </div>
-            </div>
+                    <S.ControlText>대화 내역</S.ControlText>
+                </S.ControlButton>
+            </S.BottomControls>
 
-            {/* Confetti Effect */}
             {showConfetti && (
                 <Confetti
                     width={window.innerWidth}
@@ -189,205 +209,43 @@ const Voca = () => {
                 />
             )}
 
-            {/* Modal for Pronunciation */}
             {showPronunciationModal && (
-                <div style={styles.modalOverlay}>
-                    <div style={styles.modal}>
+                <S.ModalOverlay>
+                    <S.Modal>
                         <h3>대화 내역</h3>
-                        <div style={styles.chatContainer}>
+                        <S.ChatContainer>
                             {recordings.map((recording, index) => (
-                                <div key={index} style={styles.chatMessageContainer}>
-                                    <div style={styles.userMessage}>
+                                <S.ChatMessageContainer key={index}>
+                                    <S.UserMessage>
                                         <audio controls>
                                             <source src={recording.url} type="audio/wav" />
                                             Your browser does not support the audio element.
                                         </audio>
-                                        <p style={styles.transcriptText}>{recording.transcript}</p> {/* 녹음된 텍스트를 오디오 아래에 표시 */}
-                                    </div>
-                                    <div style={styles.serverMessage}>
+                                        <S.TranscriptText>{recording.transcript}</S.TranscriptText>
+                                    </S.UserMessage>
+                                    <S.ServerMessage>
                                         <p>피드백 영역 (여기에 서버 응답이 표시됩니다)</p>
-                                    </div>
-                                </div>
+                                    </S.ServerMessage>
+                                </S.ChatMessageContainer>
                             ))}
-                        </div>
-                        <button style={styles.button} onClick={handleCloseModal}>닫기</button>
-                    </div>
-                </div>
+                        </S.ChatContainer>
+                        <S.Button onClick={handleCloseModal}>닫기</S.Button>
+                    </S.Modal>
+                </S.ModalOverlay>
             )}
 
-            {/* Modal for Completion */}
             {showCompletionModal && <CongratulationsModal goMain={handleGoMainModal} />}
 
-            {/* Modal for Microphone Permission */}
             {showPermissionModal && (
-                <div style={styles.modalOverlay}>
-                    <div style={styles.modal}>
+                <S.ModalOverlay>
+                    <S.Modal>
                         <h3>마이크 사용 권한을 켜주세요</h3>
-                        <button style={styles.button} onClick={handleRefreshPage}>새로고침</button>
-                    </div>
-                </div>
+                        <S.Button onClick={handleRefreshPage}>새로고침</S.Button>
+                    </S.Modal>
+                </S.ModalOverlay>
             )}
-        </div>
+        </S.Container>
     );
-};
-
-const styles = {
-    container: {
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        backgroundColor: '#E6F7FF',
-        padding: '20px',
-        position: 'relative',
-    },
-    topBar: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    progressContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        flex: 1,
-        marginRight: '10px',
-    },
-    progressIcon: {
-        fontSize: '24px',
-    },
-    progressBar: {
-        flex: 1,
-        height: '10px',
-        backgroundColor: '#D9D9D9',
-        borderRadius: '5px',
-        marginLeft: '10px',
-        marginRight: '10px',
-        position: 'relative',
-    },
-    progress: {
-        height: '100%',
-        backgroundColor: '#FFAA00',
-        borderRadius: '5px',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-    },
-    progressText: {
-        fontSize: '14px',
-    },
-    settingsIcon: {
-        fontSize: '24px',
-    },
-    mainContent: {
-        flex: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    speechBubble: {
-        maxWidth: '80%',
-        padding: '20px',
-        backgroundColor: '#8A2BE2',
-        color: 'white',
-        borderRadius: '15px',
-        fontSize: '18px',
-        position: 'relative',
-        textAlign: 'center',
-    },
-    microphoneContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginBottom: '30px',
-    },
-    microphoneButton: {
-        width: '80px',
-        height: '80px',
-        backgroundColor: 'white',
-        borderRadius: '40px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        fontSize: '18px',
-        cursor: 'pointer',
-    },
-    bottomControls: {
-        display: 'flex',
-        justifyContent: 'space-around',
-        paddingBottom: '20px',
-    },
-    controlButton: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        fontSize: '20px',
-        color: '#666',
-        cursor: 'pointer',
-    },
-    controlText: {
-        marginTop: '5px',
-        fontSize: '14px',
-    },
-    modalOverlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000,
-    },
-    modal: {
-        backgroundColor: '#fff',
-        padding: '20px',
-        borderRadius: '10px',
-        textAlign: 'center',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        width: '80%',
-        maxWidth: '500px',
-    },
-    chatContainer: {
-        maxHeight: '300px',
-        overflowY: 'auto',
-        textAlign: 'left',
-    },
-    chatMessageContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        marginBottom: '10px',
-    },
-    userMessage: {
-        alignSelf: 'flex-end',
-        backgroundColor: '#D1E7DD',
-        borderRadius: '10px',
-        padding: '10px',
-        maxWidth: '70%',
-        wordWrap: 'break-word',
-    },
-    transcriptText: {
-        marginTop: '5px',  // STT 텍스트와 오디오 플레이어 사이에 공간을 둠
-    },
-    serverMessage: {
-        alignSelf: 'flex-start',
-        backgroundColor: '#F8D7DA',
-        borderRadius: '10px',
-        padding: '10px',
-        maxWidth: '70%',
-        wordWrap: 'break-word',
-    },
-    button: {
-        marginTop: '20px',
-        padding: '10px 20px',
-        backgroundColor: '#4A90E2',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '16px',
-    },
 };
 
 export default Voca;
