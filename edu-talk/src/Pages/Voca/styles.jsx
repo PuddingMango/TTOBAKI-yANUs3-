@@ -203,3 +203,19 @@ export const Button = styled.button`
         background-color: #6a1bb1; /* 약간 어두운 보라색 */
     }
 `;
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  &:hover {
+    color: #555;
+  }
+  &:focus {
+    outline: none;
+  }
+`;

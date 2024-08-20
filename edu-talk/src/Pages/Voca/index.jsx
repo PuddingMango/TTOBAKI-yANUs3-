@@ -3,6 +3,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import CongratulationsModal from '../../components/CongratulationModal';
 import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';  // 쿠키 훅 import
 import * as S from './styles';  // 스타일 파일 import
 
 const words = [
@@ -19,10 +20,14 @@ const Voca = () => {
     const [showPronunciationModal, setShowPronunciationModal] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const [showPermissionModal, setShowPermissionModal] = useState(false);
+    const [showSettingsModal, setShowSettingsModal] = useState(false);  // 설정 모달 상태 추가
     const [recordings, setRecordings] = useState([]);
     const [mediaRecorder, setMediaRecorder] = useState(null);
     const [audioChunks, setAudioChunks] = useState([]);
     const navigate = useNavigate();
+    const [cookies] = useCookies(['language']);  // 쿠키에서 언어 정보 가져오기
+    const language = cookies.language || 'English';  // 쿠키에서 언어 설정값 가져오기
+    
     const {
         transcript,
         resetTranscript,
@@ -161,7 +166,43 @@ const Voca = () => {
         window.location.reload();
     };
 
+    const handleSettingsClick = () => {
+        setShowSettingsModal(true);
+    };
+
+    const handleCloseSettingsModal = () => {
+        setShowSettingsModal(false);
+    };
+
     const progress = (currentWordIndex / (words.length - 1)) * 100;
+
+    // 언어별 텍스트
+    const texts = {
+        English: {
+            settings: 'Settings',
+            exit: 'Exit',
+            listenAgain: 'Listen Again',
+            conversationHistory: 'Conversation History',
+            microphonePermission: 'Please enable microphone permission',
+            close: 'Close'
+        },
+        Korean: {
+            settings: '설정',
+            exit: '나가기',
+            listenAgain: '다시 듣기',
+            conversationHistory: '대화 내역',
+            microphonePermission: '마이크 사용 권한을 켜주세요',
+            close: '닫기'
+        },
+        Japanese: {
+            settings: '設定',
+            exit: '退出',
+            listenAgain: 'もう一度聞く',
+            conversationHistory: '会話履歴',
+            microphonePermission: 'マイクの使用許可を有効にしてください',
+            close: '閉じる'
+        }
+    };
 
     return (
         <S.Container>
@@ -173,7 +214,7 @@ const Voca = () => {
                     </S.ProgressBar>
                     <S.ProgressText>{currentWordIndex + 1}/{words.length}</S.ProgressText>
                 </S.ProgressContainer>
-                <S.SettingsIcon>⚙️</S.SettingsIcon>
+                <S.SettingsIcon onClick={handleSettingsClick}>⚙️</S.SettingsIcon>
             </S.TopBar>
 
             <S.MainContent>
@@ -182,7 +223,7 @@ const Voca = () => {
                 </S.SpeechBubble>
                 {/* TTS 재생 버튼 */}
                 <S.ControlButton onClick={() => speakWord(words[currentWordIndex])}>
-                    다시 듣기 🔊
+                    {texts[language].listenAgain} 🔊
                 </S.ControlButton>
             </S.MainContent>
 
@@ -195,7 +236,7 @@ const Voca = () => {
             <S.BottomControls>
                 <S.ControlButton onClick={handlePronunciationClick}>
                     <span role="img" aria-label="play">🔊</span>
-                    <S.ControlText>대화 내역</S.ControlText>
+                    <S.ControlText>{texts[language].conversationHistory}</S.ControlText>
                 </S.ControlButton>
             </S.BottomControls>
 
@@ -212,7 +253,7 @@ const Voca = () => {
             {showPronunciationModal && (
                 <S.ModalOverlay>
                     <S.Modal>
-                        <h3>대화 내역</h3>
+                        <h3>{texts[language].conversationHistory}</h3>
                         <S.ChatContainer>
                             {recordings.map((recording, index) => (
                                 <S.ChatMessageContainer key={index}>
@@ -229,18 +270,28 @@ const Voca = () => {
                                 </S.ChatMessageContainer>
                             ))}
                         </S.ChatContainer>
-                        <S.Button onClick={handleCloseModal}>닫기</S.Button>
+                        <S.Button onClick={handleCloseModal}>{texts[language].close}</S.Button>
                     </S.Modal>
                 </S.ModalOverlay>
             )}
 
             {showCompletionModal && <CongratulationsModal goMain={handleGoMainModal} />}
 
+            {showSettingsModal && (
+                <S.ModalOverlay>
+                    <S.Modal>
+                        <S.CloseButton onClick={handleCloseSettingsModal}>×</S.CloseButton> {/* X자 아이콘 */}
+                        <h3>{texts[language].settings}</h3>
+                        <S.Button onClick={() => navigate('/')}>{texts[language].exit}</S.Button>
+                    </S.Modal>
+                </S.ModalOverlay>
+            )}
+
             {showPermissionModal && (
                 <S.ModalOverlay>
                     <S.Modal>
-                        <h3>마이크 사용 권한을 켜주세요</h3>
-                        <S.Button onClick={handleRefreshPage}>새로고침</S.Button>
+                        <h3>{texts[language].microphonePermission}</h3>
+                        <S.Button onClick={handleRefreshPage}>{texts[language].close}</S.Button>
                     </S.Modal>
                 </S.ModalOverlay>
             )}
