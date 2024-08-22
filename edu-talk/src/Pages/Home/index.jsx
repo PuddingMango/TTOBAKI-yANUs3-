@@ -73,7 +73,7 @@ const Home = () => {
       
       {/* Top two cards side by side */}
       <div style={styles.topCardContainer}>
-        <div style={styles.smallCard}>
+        <div style={{ ...styles.smallCard, backgroundColor: 'rgb(255, 135, 70)' }}>
           <div style={styles.cardTextContainer}>
             <div style={styles.cardTitle}>{texts[language].learningVocab}</div>
           </div>
@@ -84,7 +84,7 @@ const Home = () => {
             onComplete={() => handleSlideComplete('/voca')}
           />
         </div>
-        <div style={styles.smallCard}>
+        <div style={{ ...styles.smallCard, backgroundColor: '#7eea00' }}>
           <div style={styles.cardTextContainer}>
             <div style={styles.cardTitle}>{texts[language].talkingInExample}</div>
           </div>
@@ -99,7 +99,7 @@ const Home = () => {
       
       {/* Bottom larger card centered under the top two */}
       <div style={styles.bottomCardContainer}>
-        <div style={styles.largeCard}>
+        <div style={{ ...styles.largeCard, backgroundColor: 'rgb(234 46 143)' }}>
           <div style={styles.cardTextContainer}>
             <div style={styles.cardTitle}>{texts[language].freeTalk}</div>
             <div style={styles.cardDescription}>{texts[language].description}</div>
@@ -172,7 +172,6 @@ const styles = {
   },
   smallCard: {
     width: '140px',  // Adjusted width to fit within the container
-    backgroundColor: '#f0f0f0',
     borderRadius: '15px',
     padding: '15px',
     boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.1)',
@@ -180,10 +179,10 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '120px',
+    color: '#ffffff', // White text color
   },
   largeCard: {
     width: '100%',
-    backgroundColor: '#f0f0f0',
     borderRadius: '15px',
     padding: '20px',
     boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.1)',
@@ -191,6 +190,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '150px',
+    color: '#ffffff', // White text color
   },
   cardTextContainer: {
     marginBottom: '10px',
@@ -201,7 +201,6 @@ const styles = {
   },
   cardDescription: {
     fontSize: '14px',
-    color: '#666',
     marginTop: '5px',
   },
 };

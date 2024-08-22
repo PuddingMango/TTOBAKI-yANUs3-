@@ -1,12 +1,48 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const SlideInUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const SlideOutDown = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+`;
+
+export const StyledSpeechBubble = styled.div`
+    max-width: 80%;
+    padding: 20px;
+    background-color: #8a2be2;
+    color: white;
+    border-radius: 15px;
+    font-size: 24px;
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: ${(props) => (props.isExiting ? SlideOutDown : SlideInUp)} 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+`;
 
 export const Container = styled.div`
-    height: 100vh;
+    height: 96vh; /* 화면 전체 높이 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f4f4f4; /* 밝은 회색 배경 */
-    padding: 20px;
+    background-color: #f4f4f4;
+    padding: 2vh;
     position: relative;
     font-family: 'Roboto', sans-serif;
 `;
@@ -15,6 +51,7 @@ export const TopBar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 2vh; 
 `;
 
 export const ProgressContainer = styled.div`
@@ -26,7 +63,7 @@ export const ProgressContainer = styled.div`
 
 export const ProgressIcon = styled.div`
     font-size: 24px;
-    color: #4b0082; /* 진한 보라색 아이콘 */
+    color: #4b0082;
 `;
 
 export const ProgressBar = styled.div`
@@ -41,19 +78,20 @@ export const ProgressBar = styled.div`
 
 export const Progress = styled.div`
     height: 100%;
-    background-color: #8a2be2; /* 보라색 진행 바 */
+    background-color: #8a2be2;
     border-radius: 5px;
-    width: ${(props) => props.width}%;
+    width: ${(props) => props.width || 0}%; /* width가 없을 경우 0%로 시작 */
+    transition: width 1s ease-in-out;
 `;
 
 export const ProgressText = styled.div`
     font-size: 14px;
-    color: #4b0082; /* 진한 보라색 텍스트 */
+    color: #4b0082;
 `;
 
 export const SettingsIcon = styled.div`
     font-size: 24px;
-    color: #4b0082; /* 진한 보라색 아이콘 */
+    color: #4b0082;
 `;
 
 export const MainContent = styled.div`
@@ -62,30 +100,35 @@ export const MainContent = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: -10vh; /* 단어와 버튼이 화면 중앙에 오도록 조정 */
 `;
 
 export const SpeechBubble = styled.div`
     max-width: 80%;
     padding: 20px;
-    background-color: #8a2be2; /* 보라색 말풍선 */
+    background-color: #8a2be2;
     color: white;
     border-radius: 15px;
     font-size: 24px;
     position: relative;
     text-align: center;
     margin-bottom: 20px;
+    animation: ${(props) => (props.isExiting ? SlideOutDown : SlideInUp)} 0.5s ease-in-out;
+    animation-fill-mode: forwards;
 `;
 
 export const MicrophoneContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 2vh; /* 간격 추가 */
 `;
 
 export const MicrophoneButton = styled.div`
     width: 80px;
     height: 80px;
-    background-color: #ffffff; /* 흰색 배경 */
+    background-color: #ffffff;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -96,25 +139,23 @@ export const MicrophoneButton = styled.div`
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: #f8f9fa; /* 약간 어두운 흰색 */
+        background-color: #f8f9fa;
     }
 `;
 
 export const BottomControls = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     padding-bottom: 20px;
-    margin-top: auto;
 `;
 
 export const ControlButton = styled.button`
     display: flex;
-    flex-direction: column;
     align-items: center;
     font-size: 18px;
-    color: #8a2be2; /* 보라색 텍스트 */
+    color: #8a2be2;
     background-color: #fff;
-    border: 2px solid #8a2be2; /* 보라색 테두리 */
+    border: 2px solid #8a2be2;
     padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
@@ -137,7 +178,7 @@ export const ModalOverlay = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* 반투명 검은 배경 */
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,7 +209,7 @@ export const ChatMessageContainer = styled.div`
 
 export const UserMessage = styled.div`
     align-self: flex-end;
-    background-color: #e9ecef; /* 밝은 회색 */
+    background-color: #e9ecef;
     border-radius: 10px;
     padding: 10px;
     max-width: 70%;
@@ -181,7 +222,7 @@ export const TranscriptText = styled.p`
 
 export const ServerMessage = styled.div`
     align-self: flex-start;
-    background-color: #f8d7da; /* 연한 붉은색 */
+    background-color: #f8d7da;
     border-radius: 10px;
     padding: 10px;
     max-width: 70%;
@@ -191,7 +232,7 @@ export const ServerMessage = styled.div`
 export const Button = styled.button`
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #8a2be2; /* 보라색 버튼 */
+    background-color: #8a2be2;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -200,22 +241,25 @@ export const Button = styled.button`
     transition: all 0.3s ease;
 
     &:hover {
-        background-color: #6a1bb1; /* 약간 어두운 보라색 */
+        background-color: #6a1bb1;
     }
 `;
+
 export const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #333;
-  &:hover {
-    color: #555;
-  }
-  &:focus {
-    outline: none;
-  }
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+
+    &:hover {
+        color: #555;
+    }
+
+    &:focus {
+        outline: none;
+    }
 `;
