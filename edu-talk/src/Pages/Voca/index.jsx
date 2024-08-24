@@ -212,10 +212,9 @@ const Voca = () => {
             </S.TopBar>
 
             <S.MainContent>
-                {/* 스타일드 컴포넌트에서 isExiting을 처리 */}
-                <S.StyledSpeechBubble isExiting={isExiting}>
-                    {words[currentWordIndex]}
-                </S.StyledSpeechBubble>
+                <S.SpeechBubble isexiting={isExiting ? true : undefined}>
+                {words[currentWordIndex]}
+                </S.SpeechBubble>
                 <S.ControlButton onClick={() => speakWord(words[currentWordIndex])}>
                     {texts[language].listenAgain} 🔊
                 </S.ControlButton>
@@ -223,7 +222,7 @@ const Voca = () => {
 
             <S.MicrophoneContainer>
                 <S.MicrophoneButton onClick={handleMicClick}>
-                    {listening ? '녹음 중...' : '🎤'}
+                    {listening ? '🛑' : '🎤'}
                 </S.MicrophoneButton>
             </S.MicrophoneContainer>
 

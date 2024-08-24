@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';  // Import react-cookie hooks
+import { useCookies } from 'react-cookie';
 import SliderButton from '../../components/SliderButton';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['language']);  // Manage the language cookie
+  const [cookies, setCookie] = useCookies(['language']);
   const [language, setLanguage] = useState(cookies.language || 'English');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Update the language state based on the cookie when the component mounts
     if (cookies.language) {
       setLanguage(cookies.language);
     }
@@ -26,7 +25,7 @@ const Home = () => {
 
   const selectLanguage = (lang) => {
     setLanguage(lang);
-    setCookie('language', lang, { path: '/' });  // Save the selected language in a cookie
+    setCookie('language', lang, { path: '/' });
     setIsMenuOpen(false);
   };
 
@@ -41,7 +40,7 @@ const Home = () => {
     },
     Korean: {
       greeting: '안녕하세요, 리키!',
-      learningVocab: '오늘의 어휘 학습',  // Updated text here
+      learningVocab: '오늘의 어휘 학습',
       talkingInExample: '예시 상황에서 대화하기',
       freeTalk: '자유 대화',
       description: '오늘 하루 어땠어요? AI와 대화하며 한국어 실력을 향상시키세요',
@@ -60,7 +59,7 @@ const Home = () => {
       <div style={styles.headerContainer}>
         <h1 style={styles.header}>{texts[language].greeting} <span role="img" aria-label="clap">👏</span></h1>
         <div style={styles.languageSelector} onClick={toggleMenu}>
-          {language} ▼
+          {language === 'English' ? 'English' : language === 'Korean' ? '한국어' : '日本語'} ▼
           {isMenuOpen && (
             <div style={styles.dropdownMenu}>
               <div style={styles.menuItem} onClick={() => selectLanguage('English')}>English</div>
@@ -89,7 +88,7 @@ const Home = () => {
             <div style={styles.cardTitle}>{texts[language].talkingInExample}</div>
           </div>
           <SliderButton
-            duration="10 min"
+            duration="5 min"
             circleColor="#4A90E2"  // Blue for the circle
             barColor="#AAA"        // Light gray for the bar
             onComplete={() => handleSlideComplete('/Ex-Situation')}
@@ -99,7 +98,7 @@ const Home = () => {
       
       {/* Bottom larger card centered under the top two */}
       <div style={styles.bottomCardContainer}>
-        <div style={{ ...styles.largeCard, backgroundColor: 'rgb(234 46 143)' }}>
+        <div style={{ ...styles.largeCard, backgroundColor: 'rgb(219 78 151)' }}>
           <div style={styles.cardTextContainer}>
             <div style={styles.cardTitle}>{texts[language].freeTalk}</div>
             <div style={styles.cardDescription}>{texts[language].description}</div>

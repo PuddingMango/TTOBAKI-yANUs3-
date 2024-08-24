@@ -15,29 +15,48 @@ const SlideOutDown = keyframes`
   0% {
     opacity: 1;
     transform: translateY(0);
-  }
   100% {
     opacity: 0;
     transform: translateY(20px);
   }
 `;
 
-export const StyledSpeechBubble = styled.div`
-    max-width: 80%;
-    padding: 20px;
-    background-color: #8a2be2;
-    color: white;
-    border-radius: 15px;
-    font-size: 24px;
-    position: relative;
-    text-align: center;
-    margin-bottom: 20px;
-    animation: ${(props) => (props.isExiting ? SlideOutDown : SlideInUp)} 0.5s ease-in-out;
-    animation-fill-mode: forwards;
+const SlideUp = keyframes`
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const FadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+export const SpeechBubble = styled.div`
+  max-width: 80%;
+  padding: 20px;
+  background-color: #8a2be2;
+  color: white;
+  border-radius: 15px;
+  font-size: 24px;
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+  animation: ${(props) => (props.isexiting ? SlideOutDown : SlideInUp)} 0.5s ease-in-out;
+  animation-fill-mode: forwards;
 `;
 
 export const Container = styled.div`
-    height: 96vh; /* 화면 전체 높이 */
+    height: 96vh; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -80,7 +99,7 @@ export const Progress = styled.div`
     height: 100%;
     background-color: #8a2be2;
     border-radius: 5px;
-    width: ${(props) => props.width || 0}%; /* width가 없을 경우 0%로 시작 */
+    width: ${(props) => props.width || 0}%; 
     transition: width 1s ease-in-out;
 `;
 
@@ -92,6 +111,8 @@ export const ProgressText = styled.div`
 export const SettingsIcon = styled.div`
     font-size: 24px;
     color: #4b0082;
+    cursor: pointer; 
+    z-index: 1000;
 `;
 
 export const MainContent = styled.div`
@@ -102,27 +123,13 @@ export const MainContent = styled.div`
     align-items: center;
     position: relative;
     overflow: hidden;
-    margin-top: -10vh; /* 단어와 버튼이 화면 중앙에 오도록 조정 */
-`;
-
-export const SpeechBubble = styled.div`
-    max-width: 80%;
-    padding: 20px;
-    background-color: #8a2be2;
-    color: white;
-    border-radius: 15px;
-    font-size: 24px;
-    position: relative;
-    text-align: center;
-    margin-bottom: 20px;
-    animation: ${(props) => (props.isExiting ? SlideOutDown : SlideInUp)} 0.5s ease-in-out;
-    animation-fill-mode: forwards;
+    margin-top: -10vh; 
 `;
 
 export const MicrophoneContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin-bottom: 2vh; /* 간격 추가 */
+    margin-bottom: 2vh; 
 `;
 
 export const MicrophoneButton = styled.div`
@@ -134,7 +141,10 @@ export const MicrophoneButton = styled.div`
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 24px;
+    font-size: 21px;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 
@@ -183,6 +193,7 @@ export const ModalOverlay = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: ${FadeIn} 0.3s ease-in-out;
 `;
 
 export const Modal = styled.div`
@@ -193,6 +204,27 @@ export const Modal = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 500px;
+    position: relative;
+    animation: ${SlideUp} 0.3s ease-in-out;
+`;
+
+export const CloseButton = styled.button`
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+
+    &:hover {
+        color: #555;
+    }
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 export const ChatContainer = styled.div`
@@ -242,24 +274,5 @@ export const Button = styled.button`
 
     &:hover {
         background-color: #6a1bb1;
-    }
-`;
-
-export const CloseButton = styled.button`
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-
-    &:hover {
-        color: #555;
-    }
-
-    &:focus {
-        outline: none;
     }
 `;

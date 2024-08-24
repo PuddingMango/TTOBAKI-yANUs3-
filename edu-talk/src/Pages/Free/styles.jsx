@@ -6,7 +6,7 @@ export const Container = styled.div`
     justify-content: flex-end;
     height: 96vh;
     padding: 2vh;
-    background-color: #f0f0f0;
+    background-color: #f7f7f7; /* 배경을 더 밝게 */
     font-family: 'Roboto', sans-serif;
 `;
 
@@ -15,42 +15,66 @@ export const TopBar = styled.div`
     justify-content: flex-end;
     align-items: center;
     padding: 10px 0;
+    background-color: #4a90e2; /* 상단 바의 배경색 */
+    color: white; /* 아이콘 색상 변경 */
 `;
 
 export const SettingsIcon = styled.div`
     font-size: 24px;
-    color: #4a90e2;
     cursor: pointer;
 `;
 
 export const ChatContainer = styled.div`
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 `;
 
 export const ChatMessage = styled.div`
     display: flex;
+    flex-direction: ${props => (props.align === 'right' ? 'row-reverse' : 'row')};
+    align-items: flex-end;
+    gap: 10px;
+`;
+
+export const Avatar = styled.div`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: ${props => (props.align === 'right' ? '#4a90e2' : '#ccc')};
+`;
+
+export const MessageContent = styled.div`
+    display: flex;
     flex-direction: column;
     align-items: ${props => (props.align === 'right' ? 'flex-end' : 'flex-start')};
-    margin-bottom: 10px;
 `;
 
 export const MessageText = styled.p`
-    margin: 5px 0;
-    background-color: ${props => (props.align === 'right' ? '#daf8e3' : '#f1f0f0')};
+    background-color: ${props => (props.align === 'right' ? '#daf8e3' : '#e9e9eb')};
+    color: ${props => (props.align === 'right' ? '#333' : '#333')};
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     max-width: 60%;
+    word-break: break-word;
+`;
+
+export const TimeStamp = styled.span`
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
 `;
 
 export const MicrophoneButton = styled.button`
     background-color: #4a90e2;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 16px;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 24px;
     cursor: pointer;
     align-self: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);

@@ -1,63 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { useCookies } from 'react-cookie';  // 쿠키 훅 import
+import { useCookies } from 'react-cookie'; 
 import { useNavigate } from 'react-router-dom';
-import * as S from './styles';  // 스타일 파일 import
+import * as S from './styles';  
 
 const Free = () => {
     const [messages, setMessages] = useState([]);
-    const [audioChunks, setAudioChunks] = useState([]);
-    const [mediaRecorder, setMediaRecorder] = useState(null);
     const [listening, setListening] = useState(false);
-    const [showSettingsModal, setShowSettingsModal] = useState(false);  // 설정 모달 상태 추가
+    const [showSettingsModal, setShowSettingsModal] = useState(false);  
     const navigate = useNavigate();
 
     const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
-    const [cookies] = useCookies(['language']);  // 쿠키에서 언어 정보 가져오기
-    const language = cookies.language || 'English';  // 쿠키에서 언어 설정값 가져오기
+    const [cookies] = useCookies(['language']);  
+    const language = cookies.language || 'English';  
 
     useEffect(() => {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                const recorder = new MediaRecorder(stream);
-                setMediaRecorder(recorder);
-
-                recorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
-                };
-
-                recorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    const url = URL.createObjectURL(audioBlob);
-                    const userMessage = {
-                        type: 'user',
-                        url,
-                        transcript
-                    };
-
-                    setMessages(prevMessages => [...prevMessages, userMessage]);
-                    setAudioChunks([]);
-                    resetTranscript();
-
-                    // 서버로 데이터 전송 후 응답 받기
-                    // fetchServerResponse(audioBlob);
-                };
-            })
-            .catch(error => console.error("Microphone permission error: ", error));
-    }, []);
+        if (!browserSupportsSpeechRecognition) {
+            console.error("This browser does not support speech recognition.");
+        }
+    }, [browserSupportsSpeechRecognition]);
 
     const handleMicClick = () => {
-        if (mediaRecorder && mediaRecorder.state === 'recording') {
-            mediaRecorder.stop();
+        if (listening) {
             SpeechRecognition.stopListening();
             setListening(false);
+            sendSpeechToServer(transcript); // 음성을 서버로 전송
         } else {
             resetTranscript();
-            setAudioChunks([]);
             SpeechRecognition.startListening({ continuous: true, language: 'ko-KR' });
-            mediaRecorder.start();
             setListening(true);
         }
+    };
+
+    const sendSpeechToServer = async (speechText) => {
+        const response = await fetch('http://127.0.0.1:5000/speech', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',  
+            body: JSON.stringify({ text: speechText }),
+        });
+        const data = await response.json();
+        const userMessage = {
+            type: 'user',
+            transcript: speechText,
+            timestamp: new Date().toLocaleTimeString(),
+        };
+        const botMessage = {
+            type: 'bot',
+            transcript: data.response,
+            timestamp: new Date().toLocaleTimeString(),
+        };
+        setMessages(prevMessages => [...prevMessages, userMessage, botMessage]);
     };
 
     const handleSettingsClick = () => {
@@ -72,29 +67,25 @@ const Free = () => {
         navigate('/');
     };
 
-    // 언어별 텍스트
     const texts = {
         English: {
             settings: 'Settings',
-            microphonePermission: 'Please enable microphone permission',
-            startRecording: 'Start Recording',
-            stopRecording: 'Stop Recording',
+            startRecording: '🎤',
+            stopRecording: '🛑',
             exit: 'Exit',
             close: 'Close',
         },
         Korean: {
             settings: '설정',
-            microphonePermission: '마이크 사용 권한을 켜주세요',
-            startRecording: '녹음 시작',
-            stopRecording: '녹음 중지',
+            startRecording: '🎤',
+            stopRecording: '🛑',
             exit: '나가기',
             close: '닫기',
         },
         Japanese: {
             settings: '設定',
-            microphonePermission: 'マイクの使用許可を有効にしてください',
-            startRecording: '録音開始',
-            stopRecording: '録音停止',
+            startRecording: '🎤',
+            stopRecording: '🛑',
             exit: '退出',
             close: '閉じる',
         }
@@ -102,7 +93,6 @@ const Free = () => {
 
     return (
         <S.Container>
-            {/* 상단 바 */}
             <S.TopBar>
                 <S.SettingsIcon onClick={handleSettingsClick}>⚙️</S.SettingsIcon>
             </S.TopBar>
@@ -110,10 +100,13 @@ const Free = () => {
             <S.ChatContainer>
                 {messages.map((message, index) => (
                     <S.ChatMessage key={index} align={message.type === 'user' ? 'right' : 'left'}>
-                        <audio controls src={message.url} />
-                        <S.MessageText align={message.type === 'user' ? 'right' : 'left'}>
-                            {message.transcript}
-                        </S.MessageText>
+                        <S.Avatar align={message.type === 'user' ? 'right' : 'left'} />
+                        <S.MessageContent align={message.type === 'user' ? 'right' : 'left'}>
+                            <S.MessageText align={message.type === 'user' ? 'right' : 'left'}>
+                                {message.transcript}
+                            </S.MessageText>
+                            <S.TimeStamp>{message.timestamp}</S.TimeStamp>
+                        </S.MessageContent>
                     </S.ChatMessage>
                 ))}
             </S.ChatContainer>
@@ -122,7 +115,6 @@ const Free = () => {
                 {listening ? texts[language].stopRecording : texts[language].startRecording}
             </S.MicrophoneButton>
 
-            {/* 설정 모달 */}
             {showSettingsModal && (
                 <S.ModalOverlay>
                     <S.Modal>
