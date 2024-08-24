@@ -1,14 +1,23 @@
+import logging
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from utils.speech_recognition import recognize_speech
 from utils.openai_interaction import get_openai_response
 from utils.convert_korean_age import convert_korean_age_to_number
 from utils.name_extraction import extract_name_from_text
 from config import OPENAI_API_KEY
+import openai
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-# OpenAI API 키 설정
-import openai
+# 로거 설정
+conversation_logger = logging.getLogger('conversationLogger')
+conversation_logger.setLevel(logging.INFO)
+handler = logging.FileHandler('conversation.log')
+handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+conversation_logger.addHandler(handler)
+
 openai.api_key = OPENAI_API_KEY
 
 @app.route('/')
@@ -17,65 +26,51 @@ def index():
 
 @app.route('/speech', methods=['POST'])
 def speech():
-    user_info = {"name": None, "age": None, "friend_type": None}
-    conversation_history = [
-        {"role": "system", "content": "You are a friendly companion who talks to a child who is not fluent in Korean."}
-    ]
-    
-    # 사용자 첫 인사 인식
-    user_greeting = recognize_speech()
-    if user_greeting and ("안녕" in user_greeting):
-        initial_response = "안녕? 너는 누구야?"
-        print("챗봇:", initial_response)
+    try:
+        data = request.json
+        conversation_history = data.get('conversation_history', [])
+        stage = data.get('stage', 'greeting')
 
-        # 사용자 이름 인식
-        name_response = recognize_speech()
-        if name_response:
-            user_info["name"] = extract_name_from_text(name_response.strip())
-            print(f"인식된 이름: {user_info['name']}")
+        if not conversation_history or not conversation_history[-1].get('content'):
+            return jsonify({"response": "음성 입력을 인식하지 못했습니다. 다시 시도해주세요.", 
+                            "logs": [], 
+                            "conversation_history": conversation_history, 
+                            "stage": stage})
 
-            # 챗봇이 사용자 나이를 물음
-            age_question = f"{user_info['name']}는 몇 살이야?"
-            print("챗봇:", age_question)
+        user_input = conversation_history[-1]['content']
 
-            # 사용자 나이 인식
-            age_response = recognize_speech()
-            if age_response:
-                user_info["age"] = convert_korean_age_to_number(age_response.strip()) or age_response.strip()
+        if stage == 'greeting':
+            bot_message = "안녕? 너는 누구야?"
+            stage = 'name'
+        elif stage == 'name':
+            bot_message = f"{extract_name_from_text(user_input)}, 반가워! 너는 몇 살이야?"
+            stage = 'age'
+        elif stage == 'age':
+            age = convert_korean_age_to_number(user_input.strip())
+            if age is None:
+                bot_message = "몇 살인지 다시 알려줘 !"
+                stage = 'age' 
+            else:
+                bot_message = f"{age}살이라니 멋지다! 나는 어떤 친구가 되어줄까?"
+                stage = 'friend_type'
+        elif stage == 'friend_type':
+            bot_message = f"좋아! 어떤 대화를 할까? 아무거나 말해줘"
+            stage = 'conversation'
+        else:
+            bot_message = get_openai_response(conversation_history) 
 
-                # 챗봇이 어떤 친구가 되고 싶은지 질문
-                friend_question = f"나는 어떤 친구가 될까?"
-                print("챗봇:", friend_question)
+        # 로그 기록 및 응답 반환
+        conversation_logger.info(f"유저: {user_input} / 챗봇: {bot_message}")
+        conversation_history.append({"role": "assistant", "content": bot_message})
 
-                # 사용자 친구 타입 인식
-                friend_response = recognize_speech()
-                if friend_response:
-                    user_info["friend_type"] = friend_response.strip()
+        return jsonify({"response": bot_message, 
+                        "logs": [], 
+                        "conversation_history": conversation_history, 
+                        "stage": stage})
 
-                    # 챗봇이 사용자 정보 기반으로 후속 메시지
-                    follow_up_message = f"알겠어! 나는 {user_info['name']}의 {user_info['age']}살에 맞는 {user_info['friend_type']}가 될게!"
-                    conversation_history.append({"role": "assistant", "content": follow_up_message})
-
-                    # 응답 전송
-                    print("챗봇:", follow_up_message)
-
-                    # 사용자가 자유롭게 대화를 이어가도록 처리
-                    while True:
-                        user_input = recognize_speech()
-                        if user_input:
-                            conversation_history.append({"role": "user", "content": user_input})
-                            bot_response = get_openai_response(conversation_history)
-                            if bot_response:
-                                print("챗봇:", bot_response)
-                                conversation_history.append({"role": "assistant", "content": bot_response})
-                            else:
-                                print("챗봇: 대화 중 문제가 발생했어요.")
-                                break
-                        else:
-                            print("챗봇: 음성을 인식할 수 없었어요. 다시 시도해 주세요.")
-                            break
-    
-    return jsonify({"response": "문제가 발생했습니다."})
+    except Exception as e:
+        conversation_logger.error(f"오류 발생: {e}")
+        return jsonify({"response": "서버에서 문제가 발생했습니다. 다시 시도해주세요."}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

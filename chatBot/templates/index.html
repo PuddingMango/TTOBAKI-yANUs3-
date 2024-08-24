@@ -4,21 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>음성 인식 챗봇</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #chat {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+        }
+    </style>
     <script>
-        function startSpeechRecognition() {
-            fetch('/speech', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    const chatArea = document.getElementById('chat');
-                    chatArea.innerHTML += `<p>챗봇: ${data.response}</p>`;
-                });
+        let recognition;
+        let isRecognizing = false;
+        let conversationHistory = [];
+        let stage = 'greeting'; 
+
+        function initializeRecognition() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'ko-KR';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            recognition.continuous = true; // 음성 인식을 계속 유지
+
+            recognition.onstart = () => isRecognizing = true;
+
+            recognition.onresult = (event) => {
+                const userInput = event.results[event.resultIndex][0].transcript;
+                document.getElementById('chat').innerHTML += `<p>유저: ${userInput}</p>`;
+                conversationHistory.push({"role": "user", "content": userInput});
+                sendToServer();
+            };
+
+            recognition.onend = () => {
+                if (isRecognizing) {
+                    recognition.start(); // 자동으로 다시 시작
+                } else {
+                    document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
+                }
+            };
+
+            recognition.onerror = (event) => {
+                isRecognizing = false;
+                document.getElementById('chat').innerHTML += `<p>오류: ${event.error}</p>`;
+            };
+        }
+
+        function startConversation() {
+            if (!recognition) initializeRecognition();
+            recognition.start();
+            document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
+        }
+
+        function endConversation() {
+            if (isRecognizing && recognition) {
+                isRecognizing = false;
+                recognition.stop();
+            } else {
+                document.getElementById('chat').innerHTML += `<p>마이크가 이미 꺼져 있습니다.</p>`;
+            }
+        }
+
+        function sendToServer() {
+            fetch('/speech', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({conversation_history: conversationHistory, stage: stage})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('chat').innerHTML += `<p>챗봇: ${data.response}</p>`;
+                conversationHistory = data.conversation_history;
+                stage = data.stage;
+            })
+            .catch(error => {
+                console.error('Fetch 오류:', error);
+                document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
+            });
+        }
+
+        function resetConversation() {
+            conversationHistory = [];
+            stage = 'greeting';
+            document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
         }
     </script>
 </head>
 <body>
     <h1>음성 인식 챗봇</h1>
-    <button onclick="startSpeechRecognition()">대화 시작</button>
+    <button onclick="startConversation()">마이크 켜기</button>
+    <button onclick="endConversation()">마이크 끄기</button>
+    <button onclick="resetConversation()">처음부터</button>
     <div id="chat"></div>
 </body>
 </html>
-
