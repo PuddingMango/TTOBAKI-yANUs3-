@@ -20,13 +20,17 @@ conversation_logger.addHandler(handler)
 
 openai.api_key = OPENAI_API_KEY
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/speech', methods=['POST'])
 def speech():
     try:
         data = request.json
         conversation_history = data.get('conversation_history', [])
         stage = data.get('stage', 'greeting')
-
+        print(data)
         if not conversation_history or not conversation_history[-1].get('content'):
             return jsonify({"response": "음성 입력을 인식하지 못했습니다. 다시 시도해주세요.", 
                             "logs": [], 

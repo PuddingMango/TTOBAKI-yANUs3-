@@ -7,25 +7,207 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        button, select {
-            display: inline-block;
-            margin: 5px;
-            padding: 10px 20px;
+        h1 {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #4A90E2;
+            text-align: center;
+            width: 100%;
+        }
+
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        #start-button {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            margin-left: auto;
+            white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .bottom-buttons {
+            display: none; /* 처음에는 보이지 않도록 설정 */
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
             font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
             cursor: pointer;
+            background-color: #4A90E2;
+            color: white;
+            transition: background-color 0.3s, opacity 0.5s ease;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: #357ABD;
         }
 
         #chat {
+            width: 100%;
+            max-width: 600px;
             margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             height: 300px;
             overflow-y: auto;
         }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropdown-select {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #ffffff;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-select:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        .dropdown.open .dropdown-menu {
+            max-height: 200px;
+            opacity: 1;
+        }
+
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .settings-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #4A90E2;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .settings-icon:hover {
+            background-color: #f5f5f5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 400px;
+            transform: translateY(-200px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .modal.open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
     </style>
     <script>
         let recognition;
@@ -33,16 +215,19 @@
         let conversationHistory = [];
         let stage = 'conversation';
         let selectedSituation = null;
-        let situationMessageSent = false; // 상황 메시지가 이미 전송되었는지 여부 확인
+        let situationMessageSent = false;
 
         function initializeRecognition() {
             recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.lang = 'ko-KR';
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
-            recognition.continuous = true; // 음성 인식을 계속 유지
+            recognition.continuous = true;
 
-            recognition.onstart = () => isRecognizing = true;
+            recognition.onstart = () => {
+                isRecognizing = true;
+                document.getElementById('toggle-mic').innerText = '마이크 끄기';
+            };
 
             recognition.onresult = (event) => {
                 const userInput = event.results[event.resultIndex][0].transcript;
@@ -53,8 +238,9 @@
 
             recognition.onend = () => {
                 if (isRecognizing) {
-                    recognition.start(); // 자동으로 다시 시작
+                    recognition.start();
                 } else {
+                    document.getElementById('toggle-mic').innerText = '마이크 켜기';
                     document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
                 }
             };
@@ -66,21 +252,21 @@
         }
 
         function startConversation() {
-            selectedSituation = document.getElementById('situation').value;
-            if (!selectedSituation) {
+            selectedSituation = document.getElementById('selected-situation').innerText;
+            if (!selectedSituation || selectedSituation === '--상황 선택--') {
                 alert("상황을 선택해주세요.");
                 return;
             }
 
             if (!situationMessageSent) {
                 document.getElementById('chat').innerHTML += `<p>챗봇: ${getInitialMessage(selectedSituation)}</p>`;
-                situationMessageSent = true; // 상황 메시지가 이미 전송되었음을 표시
+                situationMessageSent = true;
             }
 
             if (!recognition) initializeRecognition();
             recognition.start();
             document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
-            // 메세지 전송 없이 바로 음성 인식 시작
+            document.querySelector('.bottom-buttons').style.display = 'flex';
         }
 
         function getInitialMessage(situation) {
@@ -98,12 +284,12 @@
             }
         }
 
-        function endConversation() {
-            if (isRecognizing && recognition) {
+        function toggleMic() {
+            if (isRecognizing) {
                 isRecognizing = false;
                 recognition.stop();
             } else {
-                document.getElementById('chat').innerHTML += `<p>마이크가 이미 꺼져 있습니다.</p>`;
+                startConversation();
             }
         }
 
@@ -135,25 +321,88 @@
             conversationHistory = [];
             stage = 'conversation';
             selectedSituation = null;
-            situationMessageSent = false; // 메시지 전송 상태를 초기화
+            situationMessageSent = false;
             document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
-            document.getElementById('situation').value = "";
+            document.getElementById('selected-situation').innerText = "--상황 선택--";
+            document.getElementById('start-button').style.opacity = '0';
+            setTimeout(() => document.getElementById('start-button').style.display = 'none', 500);
+            document.querySelector('.bottom-buttons').style.display = 'none';
+            document.getElementById('toggle-mic').innerText = '마이크 켜기';
+            isRecognizing = false;
+            if (recognition) recognition.stop();
         }
+
+        function toggleDropdown() {
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.toggle('open');
+        }
+
+        function selectSituation(situation) {
+            document.getElementById('selected-situation').innerText = situation;
+            const startButton = document.getElementById('start-button');
+            startButton.style.display = 'block';
+            setTimeout(() => startButton.style.opacity = '1', 10);
+            toggleDropdown();
+        }
+
+        function toggleSettings() {
+            const modal = document.getElementById('settings-modal');
+            if (modal.classList.contains('open')) {
+                modal.classList.add('fade-out');
+                setTimeout(() => {
+                    modal.classList.remove('open');
+                    modal.classList.remove('fade-out');
+                }, 500);
+            } else {
+                modal.classList.add('open');
+            }
+        }
+
+        function exitToHome() {
+            window.location.href = 'http://localhost:3000';
+        }
+
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('settings-modal');
+            if (modal.classList.contains('open') && !event.target.closest('.modal-content') && !event.target.closest('.settings-icon')) {
+                toggleSettings();
+            }
+        });
     </script>
 </head>
 <body>
     <h1>상황별 챗봇</h1>
-    <label for="situation">상황을 선택해주세요:</label>
-    <select id="situation">
-        <option value="">--상황 선택--</option>
-        <option value="식당에서 밥을 먹으러 갔을 때">식당에서 밥을 먹으러 갔을 때</option>
-        <option value="학교에서 선생님과 대화할 때">학교에서 선생님과 대화할 때</option>
-        <option value="모르는 사람에게 길을 물어볼 때">모르는 사람에게 길을 물어볼 때</option>
-        <option value="사람들이 많은 장소를 이용할 때">사람들이 많은 장소를 이용할 때</option>
-    </select>
-    <button onclick="startConversation()">대화 시작</button>
-    <button onclick="endConversation()">마이크 끄기</button>
-    <button onclick="resetConversation()">처음부터</button>
+
+    <div class="dropdown-container">
+        <div class="dropdown">
+            <div class="dropdown-select" onclick="toggleDropdown()">
+                <span id="selected-situation">--상황 선택--</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="dropdown-menu">
+                <div class="dropdown-item" onclick="selectSituation('식당에서 밥을 먹으러 갔을 때')">식당에서 밥을 먹으러 갔을 때</div>
+                <div class="dropdown-item" onclick="selectSituation('학교에서 선생님과 대화할 때')">학교에서 선생님과 대화할 때</div>
+                <div class="dropdown-item" onclick="selectSituation('모르는 사람에게 길을 물어볼 때')">모르는 사람에게 길을 물어볼 때</div>
+                <div class="dropdown-item" onclick="selectSituation('사람들이 많은 장소를 이용할 때')">사람들이 많은 장소를 이용할 때</div>
+            </div>
+        </div>
+        <button id="start-button" onclick="startConversation()">대화 시작</button>
+    </div>
+
     <div id="chat"></div>
+
+    <div class="bottom-buttons">
+        <button id="toggle-mic" onclick="toggleMic()">마이크 켜기</button>
+        <button onclick="resetConversation()">처음부터</button>
+    </div>
+
+    <div class="settings-icon" onclick="toggleSettings()" title="설정 열기">⚙️</div>
+
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2>설정</h2>
+            <button onclick="exitToHome()">나가기</button>
+        </div>
+    </div>
 </body>
 </html>
