@@ -40,7 +40,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             margin-left: auto;
-            white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+            white-space: nowrap;
         }
 
         .button-container {
@@ -53,7 +53,7 @@
         }
 
         .bottom-buttons {
-            display: none; /* 처음에는 보이지 않도록 설정 */
+            display: none;
             justify-content: center;
             gap: 10px;
             width: 100%;
@@ -213,9 +213,8 @@
         let recognition;
         let isRecognizing = false;
         let conversationHistory = [];
-        let stage = 'conversation';
+        let stage = 'greeting';
         let selectedSituation = null;
-        let situationMessageSent = false;
 
         function initializeRecognition() {
             recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -233,7 +232,7 @@
                 const userInput = event.results[event.resultIndex][0].transcript;
                 document.getElementById('chat').innerHTML += `<p>유저: ${userInput}</p>`;
                 conversationHistory.push({"role": "user", "content": userInput});
-                sendToServer(userInput, true);
+                sendToServer(userInput);
             };
 
             recognition.onend = () => {
@@ -258,39 +257,13 @@
                 return;
             }
 
-            if (!situationMessageSent) {
-                document.getElementById('chat').innerHTML += `<p>챗봇: ${getInitialMessage(selectedSituation)}</p>`;
-                situationMessageSent = true;
-            }
-
             if (!recognition) initializeRecognition();
             recognition.start();
             document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
             document.querySelector('.bottom-buttons').style.display = 'flex';
-        }
 
-        function getInitialMessage(situation) {
-            switch(situation) {
-                case "식당에서 밥을 먹으러 갔을 때":
-                    return "식당에서는 예의 바르게 주문을 해야 해요. '안녕하세요, 저는 ~~를 주문할게요' 라고 말하면 좋아요. 그 외에도 궁금한 게 있다면 알려주세요!";
-                case "학교에서 선생님과 대화할 때":
-                    return "선생님과 대화할 때는 공손하게, '선생님, 질문이 있습니다'처럼 시작해보세요. 더 궁금한 것이 있나요?";
-                case "모르는 사람에게 길을 물어볼 때":
-                    return "모르는 사람에게 길을 물어볼 때는 먼저 '실례합니다, 길 좀 여쭤봐도 될까요?'라고 정중히 물어보세요. 다른 상황이 궁금하신가요?";
-                case "사람들이 많은 장소를 이용할 때":
-                    return "사람이 많은 장소에서는 주변 사람들을 배려하며 움직이고, 조용히 대화를 나누는 것이 좋아요. 추가로 궁금한 점이 있다면 물어보세요!";
-                default:
-                    return "상황에 맞는 적절한 대화를 시작해봅시다!";
-            }
-        }
-
-        function toggleMic() {
-            if (isRecognizing) {
-                isRecognizing = false;
-                recognition.stop();
-            } else {
-                startConversation();
-            }
+            // 초기 상황 메시지 출력
+            sendToServer("", false);
         }
 
         function sendToServer(userInput = "", isVoice = false) {
@@ -308,8 +281,22 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById('chat').innerHTML += `<p>챗봇: ${data.response}</p>`;
+                
+                // TTS 오디오 재생
+                if (data.audio_url) {
+                    let audio = new Audio(data.audio_url);
+                    audio.play();
+
+                    // 음성 재생이 끝난 후 음성 인식을 다시 시작
+                    audio.onended = () => {
+                        if (isRecognizing) {
+                            recognition.start();
+                        }
+                    };
+                }
+
                 conversationHistory = data.conversation_history;
-                stage = data.stage;
+                stage = data.stage;  // 서버로부터 받은 stage 상태를 업데이트
             })
             .catch(error => {
                 console.error('Fetch 오류:', error);
@@ -319,9 +306,8 @@
 
         function resetConversation() {
             conversationHistory = [];
-            stage = 'conversation';
+            stage = 'greeting';
             selectedSituation = null;
-            situationMessageSent = false;
             document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
             document.getElementById('selected-situation').innerText = "--상황 선택--";
             document.getElementById('start-button').style.opacity = '0';

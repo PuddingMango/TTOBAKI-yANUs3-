@@ -281,15 +281,6 @@
             }
         }
 
-        function endConversation() {
-            if (isRecognizing && recognition) {
-                isRecognizing = false;
-                recognition.stop();
-            } else {
-                document.getElementById('chat').innerHTML += `<p>마이크가 이미 꺼져 있습니다.</p>`;
-            }
-        }
-
         function sendToServer() {
             fetch('/chat/speech', {
                 method: 'POST',
@@ -308,6 +299,19 @@
                     </div>`;
                 conversationHistory = data.conversation_history;
                 stage = data.stage;
+                
+                // TTS 오디오 재생
+                if (data.audio_url) {
+                    let audio = new Audio(data.audio_url);
+                    audio.play();
+
+                    // 음성 재생이 끝난 후 음성 인식을 다시 시작
+                    audio.onended = () => {
+                        if (isRecognizing) {
+                            recognition.start();
+                        }
+                    };
+                }
                 scrollToBottom(); // 대화 추가 시 스크롤을 맨 아래로 이동
             })
             .catch(error => {
@@ -339,10 +343,6 @@
             } else {
                 modal.classList.add('open');
             }
-        }
-
-        function exitToHome() {
-            window.location.href = 'http://localhost:3000';
         }
 
         function scrollToBottom() {
@@ -381,3 +381,6 @@
     </div>
 </body>
 </html>
+
+
+
