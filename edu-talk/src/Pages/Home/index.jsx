@@ -17,14 +17,12 @@ const Home = () => {
 
   const handleSlideComplete = (path) => {
     if (path.startsWith('http')) {
-      // 절대 경로일 경우 window.location.href 사용
       window.location.href = path;
     } else {
-      // 상대 경로일 경우 기존 navigate 사용
       navigate(path);
     }
   };
-  
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -34,6 +32,9 @@ const Home = () => {
     setCookie('language', lang, { path: '/' });
     setIsMenuOpen(false);
   };
+
+  // 환경 변수로부터 서버 URL을 가져오기
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
 
   // Texts for different languages
   const texts = {
@@ -113,7 +114,7 @@ const Home = () => {
             duration="10 min"
             circleColor="#FF69B4"  // Pink for the circle
             barColor="#888"        // Medium gray for the bar
-            onComplete={() => handleSlideComplete('http://localhost:5001/')}
+            onComplete={() => handleSlideComplete(serverUrl)}
           />
         </div>
       </div>
@@ -132,7 +133,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'relative',  // To position dropdown menu correctly
+    position: 'relative',
   },
   header: {
     fontSize: '24px',
@@ -176,7 +177,7 @@ const styles = {
     justifyContent: 'center',
   },
   smallCard: {
-    width: '140px',  // Adjusted width to fit within the container
+    width: '140px',
     borderRadius: '15px',
     padding: '15px',
     boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.1)',
@@ -184,7 +185,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '120px',
-    color: '#ffffff', // White text color
+    color: '#ffffff',
   },
   largeCard: {
     width: '100%',
@@ -195,7 +196,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '150px',
-    color: '#ffffff', // White text color
+    color: '#ffffff',
   },
   cardTextContainer: {
     marginBottom: '10px',
