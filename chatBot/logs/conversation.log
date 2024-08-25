@@ -1,0 +1,455 @@
+2024-08-24 17:21:17,641 -  * Debugger is active!
+2024-08-24 17:21:17,646 -  * Debugger PIN: 867-588-105
+2024-08-24 17:21:22,435 - 127.0.0.1 - - [24/Aug/2024 17:21:22] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:21:22,438 - User (greeting): 안녕
+2024-08-24 17:21:22,438 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:21:22,439 - 127.0.0.1 - - [24/Aug/2024 17:21:22] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:21:32,785 - 127.0.0.1 - - [24/Aug/2024 17:21:32] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:21:32,788 - User (name): 홍
+2024-08-24 17:21:32,788 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:21:32,788 - 127.0.0.1 - - [24/Aug/2024 17:21:32] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:22:27,363 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2024-08-24 17:22:27,364 - [33mPress CTRL+C to quit[0m
+2024-08-24 17:22:27,364 -  * Restarting with stat
+2024-08-24 17:22:27,519 -  * Debugger is active!
+2024-08-24 17:22:27,526 -  * Debugger PIN: 867-588-105
+2024-08-24 17:22:35,629 - 127.0.0.1 - - [24/Aug/2024 17:22:35] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:22:35,630 - User (greeting): 안녕
+2024-08-24 17:22:35,630 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:22:35,631 - 127.0.0.1 - - [24/Aug/2024 17:22:35] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:22:40,787 - 127.0.0.1 - - [24/Aug/2024 17:22:40] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:22:40,790 - 127.0.0.1 - - [24/Aug/2024 17:22:40] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:22:40,791 - User (name): 홍
+2024-08-24 17:22:40,791 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:22:40,792 - 127.0.0.1 - - [24/Aug/2024 17:22:40] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:22:40,798 - User (name): 홍윤
+2024-08-24 17:22:40,799 - Bot: 홍윤, 반가워! 너는 몇 살이야?
+2024-08-24 17:22:40,799 - 127.0.0.1 - - [24/Aug/2024 17:22:40] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:22:49,264 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2024-08-24 17:22:49,264 - [33mPress CTRL+C to quit[0m
+2024-08-24 17:22:49,264 -  * Restarting with stat
+2024-08-24 17:22:49,421 -  * Debugger is active!
+2024-08-24 17:22:49,426 -  * Debugger PIN: 867-588-105
+2024-08-24 17:22:54,148 - 127.0.0.1 - - [24/Aug/2024 17:22:54] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:22:54,153 - User (greeting): 안녕
+2024-08-24 17:22:54,154 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:22:54,154 - 127.0.0.1 - - [24/Aug/2024 17:22:54] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:22:56,098 - User (name): 홍
+2024-08-24 17:22:56,099 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:22:56,099 - 127.0.0.1 - - [24/Aug/2024 17:22:56] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:22:59,659 - 127.0.0.1 - - [24/Aug/2024 17:22:59] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:22:59,661 - User (age): 홍
+2024-08-24 17:22:59,662 - Bot: 홍살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 17:22:59,662 - 127.0.0.1 - - [24/Aug/2024 17:22:59] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:23:04,739 - 127.0.0.1 - - [24/Aug/2024 17:23:04] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:23:04,742 - User (friend_type): 좋은
+2024-08-24 17:23:04,742 - Bot: 좋아! 나는 너의 좋은가 될게!
+2024-08-24 17:23:04,743 - 127.0.0.1 - - [24/Aug/2024 17:23:04] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:23:08,568 - User (conversation): 그래
+2024-08-24 17:23:08,568 - Bot: 네, 무엇이든 도와드릴게요. 무슨 질문이 있으신가요?
+2024-08-24 17:23:08,569 - 127.0.0.1 - - [24/Aug/2024 17:23:08] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:23:20,811 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:23:20,842 -  * Restarting with stat
+2024-08-24 17:24:30,891 -  * Restarting with stat
+2024-08-24 17:24:41,310 -  * Restarting with stat
+2024-08-24 17:25:33,257 -  * Restarting with stat
+2024-08-24 17:25:46,683 -  * Restarting with stat
+2024-08-24 17:26:26,443 -  * Restarting with stat
+2024-08-24 17:28:15,033 -  * Restarting with stat
+2024-08-24 17:28:15,256 -  * Debugger is active!
+2024-08-24 17:28:15,260 -  * Debugger PIN: 867-588-105
+2024-08-24 17:28:23,268 - 127.0.0.1 - - [24/Aug/2024 17:28:23] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:28:23,270 - User (greeting): 안녕
+2024-08-24 17:28:23,270 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:28:23,270 - 127.0.0.1 - - [24/Aug/2024 17:28:23] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:28:26,275 - User (name): 홍
+2024-08-24 17:28:26,275 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:28:26,276 - 127.0.0.1 - - [24/Aug/2024 17:28:26] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:28:26,277 - User (name): 홍윤
+2024-08-24 17:28:26,277 - Bot: 홍윤, 반가워! 너는 몇 살이야?
+2024-08-24 17:28:26,278 - 127.0.0.1 - - [24/Aug/2024 17:28:26] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:28:29,511 - 127.0.0.1 - - [24/Aug/2024 17:28:29] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:28:29,515 - User (age): 2
+2024-08-24 17:28:29,515 - Bot: 2살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 17:28:29,516 - 127.0.0.1 - - [24/Aug/2024 17:28:29] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:28:35,806 - 127.0.0.1 - - [24/Aug/2024 17:28:35] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:28:35,810 - User (friend_type): 좋은
+2024-08-24 17:28:35,810 - Bot: 좋아! 나는 너의 좋은가 될게!
+2024-08-24 17:28:35,811 - 127.0.0.1 - - [24/Aug/2024 17:28:35] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:28:41,469 - User (conversation): 그래
+2024-08-24 17:28:41,469 - Bot: 네, 무엇이든 도와드릴 준비가 되어 있습니다! 어떤 것에 대해 이야기하고 싶으신가요?
+2024-08-24 17:28:41,470 - 127.0.0.1 - - [24/Aug/2024 17:28:41] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:29:20,107 - 127.0.0.1 - - [24/Aug/2024 17:29:20] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:29:22,361 - User (conversation): 아
+2024-08-24 17:29:22,361 - Bot: 괜찮으세요? 간단하게 휴식을 취하거나, 다른 주제로 이야기를 바꾸어 보는 것은 어떨까요?
+2024-08-24 17:29:22,362 - 127.0.0.1 - - [24/Aug/2024 17:29:22] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:29:25,266 - User (conversation): 그
+2024-08-24 17:29:25,266 - Bot: 아직 좋아하고 싶은 주제를 말씀하지 않으셨네요. 혹시 경제, 엔터테인먼트, 스포츠, 음악 등에 대해 알고 싶은게 있으신가요?
+2024-08-24 17:29:25,267 - 127.0.0.1 - - [24/Aug/2024 17:29:25] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:29:25,282 - 127.0.0.1 - - [24/Aug/2024 17:29:25] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:29:25,507 - User (conversation): 그랬었
+2024-08-24 17:29:25,507 - Bot: 어떤 일이 있으셨나요? 필요하다면 이야기하는 것 역시 도움이 될 수 있어요.
+2024-08-24 17:29:25,507 - 127.0.0.1 - - [24/Aug/2024 17:29:25] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:29:25,527 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:29:25,535 - 127.0.0.1 - - [24/Aug/2024 17:29:25] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:29:26,553 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more. You can increase your rate limit by adding a payment method to your account at https://platform.openai.com/account/billing.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:29:26,561 - 127.0.0.1 - - [24/Aug/2024 17:29:26] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:29:27,604 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:29:27,607 - 127.0.0.1 - - [24/Aug/2024 17:29:27] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:29:31,649 - 127.0.0.1 - - [24/Aug/2024 17:29:31] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:29:32,018 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:29:32,028 - 127.0.0.1 - - [24/Aug/2024 17:29:32] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:29:52,446 - 127.0.0.1 - - [24/Aug/2024 17:29:52] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:29:52,448 - User (greeting): 안녕
+2024-08-24 17:29:52,448 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:29:52,449 - 127.0.0.1 - - [24/Aug/2024 17:29:52] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:29:54,876 - User (name): 홍
+2024-08-24 17:29:54,877 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:29:54,877 - 127.0.0.1 - - [24/Aug/2024 17:29:54] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:29:59,282 - 127.0.0.1 - - [24/Aug/2024 17:29:59] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:29:59,284 - User (age): 집
+2024-08-24 17:29:59,285 - Bot: 집살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 17:29:59,285 - 127.0.0.1 - - [24/Aug/2024 17:29:59] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:30:03,786 - User (friend_type): 친구
+2024-08-24 17:30:03,786 - Bot: 좋아! 나는 너의 친구가 될게!
+2024-08-24 17:30:03,787 - 127.0.0.1 - - [24/Aug/2024 17:30:03] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:30:06,414 - 127.0.0.1 - - [24/Aug/2024 17:30:06] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:30:07,988 - User (conversation): 그래
+2024-08-24 17:30:07,989 - Bot: 그럼, 친구로써 어떤 이야기를 나눠볼까요?
+2024-08-24 17:30:07,990 - 127.0.0.1 - - [24/Aug/2024 17:30:07] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:30:11,653 - 127.0.0.1 - - [24/Aug/2024 17:30:11] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:30:14,267 - User (conversation): 좋은
+2024-08-24 17:30:14,267 - Bot: 좋아요, 그럼 우리 어떤 주제로 이야기를 나눠볼까요? 게임, 영화, 책, 음악 등등 원하는 주제를 말씀해주세요.
+2024-08-24 17:30:14,268 - 127.0.0.1 - - [24/Aug/2024 17:30:14] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:30:19,648 - 127.0.0.1 - - [24/Aug/2024 17:30:19] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:30:20,031 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:30:20,041 - 127.0.0.1 - - [24/Aug/2024 17:30:20] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:30:29,265 - 127.0.0.1 - - [24/Aug/2024 17:30:29] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:30:29,267 - User (greeting): 안녕
+2024-08-24 17:30:29,267 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:30:29,268 - 127.0.0.1 - - [24/Aug/2024 17:30:29] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:31:34,587 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:31:34,615 -  * Restarting with stat
+2024-08-24 17:31:34,839 -  * Debugger is active!
+2024-08-24 17:31:34,844 -  * Debugger PIN: 867-588-105
+2024-08-24 17:31:40,043 - 127.0.0.1 - - [24/Aug/2024 17:31:40] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:31:40,046 - User (greeting): 안녕
+2024-08-24 17:31:40,046 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:31:40,046 - 127.0.0.1 - - [24/Aug/2024 17:31:40] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:31:43,173 - User (name): 홍
+2024-08-24 17:31:43,173 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:31:43,173 - 127.0.0.1 - - [24/Aug/2024 17:31:43] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:31:47,068 - 127.0.0.1 - - [24/Aug/2024 17:31:47] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:31:47,069 - User (age): 2
+2024-08-24 17:31:47,069 - Bot: 2살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 17:31:47,070 - 127.0.0.1 - - [24/Aug/2024 17:31:47] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:31:49,936 - User (friend_type): 좋은
+2024-08-24 17:31:49,936 - Bot: 좋아! 나는 너의 좋은가 될게!
+2024-08-24 17:31:49,936 - 127.0.0.1 - - [24/Aug/2024 17:31:49] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:31:51,889 - User (conversation): 그래
+2024-08-24 17:31:53,723 - Bot: 네, 언제든지 도와드릴 준비가 되어 있어요! 무엇이든 물어봐주세요.
+2024-08-24 17:31:53,724 - 127.0.0.1 - - [24/Aug/2024 17:31:53] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:32:00,133 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:32:00,160 -  * Restarting with stat
+2024-08-24 17:32:00,386 -  * Debugger is active!
+2024-08-24 17:32:00,391 -  * Debugger PIN: 867-588-105
+2024-08-24 17:32:01,409 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:32:01,446 -  * Restarting with stat
+2024-08-24 17:32:07,704 -  * Restarting with stat
+2024-08-24 17:32:07,859 -  * Debugger is active!
+2024-08-24 17:32:07,864 -  * Debugger PIN: 867-588-105
+2024-08-24 17:34:08,234 - 127.0.0.1 - - [24/Aug/2024 17:34:08] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:34:08,236 - User (greeting): 안녕
+2024-08-24 17:34:08,236 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:34:08,236 - 127.0.0.1 - - [24/Aug/2024 17:34:08] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:34:09,908 - User (name): 홍
+2024-08-24 17:34:09,908 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:34:09,909 - 127.0.0.1 - - [24/Aug/2024 17:34:09] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:34:12,395 - User (age): 2
+2024-08-24 17:34:12,396 - Bot: 2살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 17:34:12,396 - 127.0.0.1 - - [24/Aug/2024 17:34:12] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:34:15,271 - 127.0.0.1 - - [24/Aug/2024 17:34:15] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:34:15,274 - User (friend_type): 좋은
+2024-08-24 17:34:15,275 - Bot: 좋아! 나는 너의 좋은가 될게!
+2024-08-24 17:34:15,275 - 127.0.0.1 - - [24/Aug/2024 17:34:15] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:34:18,616 - User (conversation): 그래
+2024-08-24 17:34:18,616 - Bot: 네, 무엇이든 도와드리겠습니다! 다음에 어떤 질문을 할까요?
+2024-08-24 17:34:18,617 - 127.0.0.1 - - [24/Aug/2024 17:34:18] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:37:32,316 - 127.0.0.1 - - [24/Aug/2024 17:37:32] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:37:35,233 - User (conversation): 차
+2024-08-24 17:37:35,233 - Bot: 차에 대해 더 구체적으로 말씀해주시겠어요? 자동차의 브랜드, 모델, 그외에 관련된 정보나 질문 등에 대해서 알려주시면, 제가 더 많은 도움을 드릴 수 있을 것 같아요.
+2024-08-24 17:37:35,234 - 127.0.0.1 - - [24/Aug/2024 17:37:35] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:37:37,445 - 127.0.0.1 - - [24/Aug/2024 17:37:37] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:37:40,696 - User (conversation): 혹
+2024-08-24 17:37:40,696 - Bot: "혹"이란 단어만으로는 무엇에 대해 도움을 드릴지 알기 어렵습니다. 조금 더 구체적인 정보를 제공해주시면 감사하겠습니다. 차에 관련된 정보인가요, 아니면 다른 주제에 대한 것인가요?
+2024-08-24 17:37:40,697 - 127.0.0.1 - - [24/Aug/2024 17:37:40] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:38:18,164 - 127.0.0.1 - - [24/Aug/2024 17:38:18] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:38:18,166 - 127.0.0.1 - - [24/Aug/2024 17:38:18] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:38:20,907 - User (conversation): 트
+2024-08-24 17:38:20,908 - Bot: "트"는 많은 단어들의 시작 부분입니다. "트럭", "트레이닝", "트위터" 등등... 좀 더 구체적인 정보나 전체 문장을 제공해주시면 더욱 도움이 될 것 같습니다.
+2024-08-24 17:38:20,909 - 127.0.0.1 - - [24/Aug/2024 17:38:20] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:38:22,372 - User (conversation): 트레이
+2024-08-24 17:38:22,373 - Bot: "트레이"에 대해 더 많은 정보를 주시면 좋겠습니다. 트레이는 보통 음식을 나르는 데 사용하는 도구를 의미하곤 합니다. 그러나 컴퓨터에서는 하드웨어 조각을 가리키는 용어로도 사용됩니다. 이 중 어떤 트레이에 대해 더 알고 싶으신지 알려주세요.
+2024-08-24 17:38:22,374 - 127.0.0.1 - - [24/Aug/2024 17:38:22] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:38:22,696 - User (conversation): 제품
+2024-08-24 17:38:22,696 - Bot: 제품에 관련된 질문을 해주시면 도와드리겠습니다. 어떤 제품에 대해 궁금하신가요? 제품의 특성, 사용 방법, 가격 정보 등 어떤 것이든 질문해 주시면 도와드리겠습니다.
+2024-08-24 17:38:22,697 - 127.0.0.1 - - [24/Aug/2024 17:38:22] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:38:30,581 - 127.0.0.1 - - [24/Aug/2024 17:38:30] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:38:30,945 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more. You can increase your rate limit by adding a payment method to your account at https://platform.openai.com/account/billing.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:38:30,961 - 127.0.0.1 - - [24/Aug/2024 17:38:30] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:38:32,366 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more. You can increase your rate limit by adding a payment method to your account at https://platform.openai.com/account/billing.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:38:32,377 - 127.0.0.1 - - [24/Aug/2024 17:38:32] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:39:33,374 - 127.0.0.1 - - [24/Aug/2024 17:39:33] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:39:37,899 - User (conversation): 반
+2024-08-24 17:39:37,900 - Bot: "반"이라는 단어는 여러 가지 뜻을 가지고 있습니다. 학교의 반을 의미하는 것인지, 어떤 것의 반을 나타내는 것인지 구체적인 내용을 더 알려주시면 감사하겠습니다.
+2024-08-24 17:39:37,900 - 127.0.0.1 - - [24/Aug/2024 17:39:37] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:39:38,895 - User (conversation): 불
+2024-08-24 17:39:38,895 - Bot: "불"이라는 단어는 여러 가지를 의미할 수 있습니다. 반짝이는 빛을 내는 불길을 말할 수도 있고, 피울 수 있는 모닥불을 의미할 수 있습니다. 그 외에도 이질적인 물체나 혹을 뜻하는 '불'이 될 수도 있어요. 어떤 '불'에 대해 궁금하신지 좀 더 구체적으로 말씀해주시면 감사하겠습니다!
+2024-08-24 17:39:38,896 - 127.0.0.1 - - [24/Aug/2024 17:39:38] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:39:59,437 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:39:59,480 -  * Restarting with stat
+2024-08-24 17:49:30,598 -  * Restarting with stat
+2024-08-24 17:49:30,834 -  * Debugger is active!
+2024-08-24 17:49:30,840 -  * Debugger PIN: 867-588-105
+2024-08-24 17:49:33,877 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:49:33,915 -  * Restarting with stat
+2024-08-24 17:49:37,172 -  * Restarting with stat
+2024-08-24 17:49:37,327 -  * Debugger is active!
+2024-08-24 17:49:37,332 -  * Debugger PIN: 867-588-105
+2024-08-24 17:50:56,466 - 127.0.0.1 - - [24/Aug/2024 17:50:56] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:51:01,649 - User (None): 알
+2024-08-24 17:51:01,649 - Bot: "알"이라는 단어는 누구의 알인지, 어떤 목적으로 알을 찾으시는지 등에 따라 다양한 정보를 제공할 수 있습니다. 예를 들면, 조류의 알, 물고기의 알, 식품재료로 쓰이는 알, 지식이나 정보를 표현하는 '알' 등이 있습니다. 좀 더 자세하게 알려주시면 저는 더욱 도움이 될 수 있습니다.
+2024-08-24 17:51:01,650 - 127.0.0.1 - - [24/Aug/2024 17:51:01] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:51:50,552 - 127.0.0.1 - - [24/Aug/2024 17:51:50] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:51:50,554 - User (greeting): 안녕
+2024-08-24 17:51:50,554 - Bot: 안녕? 너는 누구야?
+2024-08-24 17:51:50,554 - 127.0.0.1 - - [24/Aug/2024 17:51:50] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:51:53,398 - User (name): 홍
+2024-08-24 17:51:53,398 - Bot: 홍, 반가워! 너는 몇 살이야?
+2024-08-24 17:51:53,399 - 127.0.0.1 - - [24/Aug/2024 17:51:53] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:51:57,696 - 127.0.0.1 - - [24/Aug/2024 17:51:57] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:51:57,699 - User (age): 2
+2024-08-24 17:51:57,699 - Bot: 2살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 17:51:57,700 - 127.0.0.1 - - [24/Aug/2024 17:51:57] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:52:03,135 - 127.0.0.1 - - [24/Aug/2024 17:52:03] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:52:03,137 - User (friend_type): 좋은
+2024-08-24 17:52:03,137 - Bot: 좋아! 나는 너의 좋은가 될게!
+2024-08-24 17:52:03,137 - 127.0.0.1 - - [24/Aug/2024 17:52:03] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:52:07,244 - User (conversation): 그래
+2024-08-24 17:52:07,244 - Bot: 네, 언제든지 제게 명령할 수 있습니다! 도와 드릴 일이 있으면 말씀해주세요.
+2024-08-24 17:52:07,244 - 127.0.0.1 - - [24/Aug/2024 17:52:07] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:52:11,936 - 127.0.0.1 - - [24/Aug/2024 17:52:11] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:52:14,359 - User (conversation): 리
+2024-08-24 17:52:14,359 - Bot: 네, 제가 당신을 도울 수 있는 무언가가 있을까요? '리'라고 말씀하셨는데 추가적인 설명이나 요청이 있나요?
+2024-08-24 17:52:14,360 - 127.0.0.1 - - [24/Aug/2024 17:52:14] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:52:18,224 - 127.0.0.1 - - [24/Aug/2024 17:52:18] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:52:21,176 - User (conversation): 리
+2024-08-24 17:52:21,177 - Bot: "리"라는 단어는 좀 더 구체적인 문맥이 필요합니다. 무엇에 대해 이야기하시는 건가요? 도움이 필요하시다면, 조금 더 자세히 설명해주세요.
+2024-08-24 17:52:21,178 - 127.0.0.1 - - [24/Aug/2024 17:52:21] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:53:14,970 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:53:15,006 -  * Restarting with stat
+2024-08-24 17:53:23,376 -  * Restarting with stat
+2024-08-24 17:53:46,908 -  * Restarting with stat
+2024-08-24 17:53:47,177 -  * Debugger is active!
+2024-08-24 17:53:47,182 -  * Debugger PIN: 867-588-105
+2024-08-24 17:54:20,536 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:54:20,566 -  * Restarting with stat
+2024-08-24 17:54:20,814 -  * Debugger is active!
+2024-08-24 17:54:20,819 -  * Debugger PIN: 867-588-105
+2024-08-24 17:54:23,859 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:54:23,895 -  * Restarting with stat
+2024-08-24 17:54:24,062 -  * Debugger is active!
+2024-08-24 17:54:24,066 -  * Debugger PIN: 867-588-105
+2024-08-24 17:54:25,951 - 127.0.0.1 - - [24/Aug/2024 17:54:25] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:54:25,954 - User (None): 안녕
+2024-08-24 17:54:27,275 - Bot: 안녕하세요. 어떻게 도와드릴까요?
+2024-08-24 17:54:27,275 - 127.0.0.1 - - [24/Aug/2024 17:54:27] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:54:48,441 - 127.0.0.1 - - [24/Aug/2024 17:54:48] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:54:48,443 - User (None): 안녕 반가워 반가워
+2024-08-24 17:54:49,902 - Bot: 안녕하세요, 반갑습니다! 어떤 도움을 드릴까요?
+2024-08-24 17:54:49,903 - 127.0.0.1 - - [24/Aug/2024 17:54:49] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:55:04,609 - 127.0.0.1 - - [24/Aug/2024 17:55:04] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:55:04,615 - User (None): 안녕 반가워
+2024-08-24 17:55:06,038 - Bot: 안녕하세요, 반갑습니다! 어떤 도움을 드릴까요?
+2024-08-24 17:55:06,039 - 127.0.0.1 - - [24/Aug/2024 17:55:06] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:55:08,740 - User (None): 반
+2024-08-24 17:55:08,945 - User (None): 반가
+2024-08-24 17:55:08,948 - User (None): 반가
+2024-08-24 17:55:09,187 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more. You can increase your rate limit by adding a payment method to your account at https://platform.openai.com/account/billing.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:55:09,201 - 127.0.0.1 - - [24/Aug/2024 17:55:09] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:55:09,989 - Bot: 반갑습니다. 무엇을 도와드릴까요?
+2024-08-24 17:55:09,990 - 127.0.0.1 - - [24/Aug/2024 17:55:09] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:55:10,270 - Bot: 워요! 어떻게 도와드릴까요?
+2024-08-24 17:55:10,271 - 127.0.0.1 - - [24/Aug/2024 17:55:10] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:55:12,544 - 127.0.0.1 - - [24/Aug/2024 17:55:12] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:55:12,546 - User (None): 안녕
+2024-08-24 17:55:12,685 - User (None): 안녕
+2024-08-24 17:55:12,829 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:55:12,839 - 127.0.0.1 - - [24/Aug/2024 17:55:12] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:55:13,232 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:55:13,243 - 127.0.0.1 - - [24/Aug/2024 17:55:13] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:55:19,296 - 127.0.0.1 - - [24/Aug/2024 17:55:19] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:55:19,299 - User (None): 안녕
+2024-08-24 17:55:19,644 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 17:55:19,655 - 127.0.0.1 - - [24/Aug/2024 17:55:19] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 17:55:25,777 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:55:25,801 -  * Restarting with stat
+2024-08-24 17:55:26,062 -  * Debugger is active!
+2024-08-24 17:55:26,069 -  * Debugger PIN: 867-588-105
+2024-08-24 17:55:37,655 - 127.0.0.1 - - [24/Aug/2024 17:55:37] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:55:37,658 - User (None): 안녕
+2024-08-24 17:55:39,188 - Bot: 안녕하세요! 어떻게 도와드릴까요?
+2024-08-24 17:55:39,190 - 127.0.0.1 - - [24/Aug/2024 17:55:39] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:55:50,131 - 127.0.0.1 - - [24/Aug/2024 17:55:50] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 17:55:50,133 - User (None): 안녕 반가워
+2024-08-24 17:55:51,480 - Bot: 안녕하세요! 도와드릴 일이 있으신가요?
+2024-08-24 17:55:51,480 - 127.0.0.1 - - [24/Aug/2024 17:55:51] "POST /speech HTTP/1.1" 200 -
+2024-08-24 17:56:03,521 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:56:03,556 -  * Restarting with stat
+2024-08-24 17:56:03,797 -  * Debugger is active!
+2024-08-24 17:56:03,803 -  * Debugger PIN: 867-588-105
+2024-08-24 17:56:04,823 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 17:56:04,860 -  * Restarting with stat
+2024-08-24 18:00:37,236 -  * Restarting with stat
+2024-08-24 18:00:37,490 -  * Debugger is active!
+2024-08-24 18:00:37,497 -  * Debugger PIN: 867-588-105
+2024-08-24 18:02:30,600 - 127.0.0.1 - - [24/Aug/2024 18:02:30] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:02:44,271 - 127.0.0.1 - - [24/Aug/2024 18:02:44] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:02:58,668 - Bot: You are a friendly companion who talks to a child who is not fluent in Korean.
+2024-08-24 18:02:58,669 - 127.0.0.1 - - [24/Aug/2024 18:02:58] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:02:58,837 - Bot: 시발는 몇 살이야?
+2024-08-24 18:02:58,837 - 127.0.0.1 - - [24/Aug/2024 18:02:58] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:08:09,903 - 127.0.0.1 - - [24/Aug/2024 18:08:09] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:08:17,077 - Bot: You are a friendly companion who talks to a child who is not fluent in Korean.
+2024-08-24 18:08:17,079 - 127.0.0.1 - - [24/Aug/2024 18:08:17] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:08:23,055 - 127.0.0.1 - - [24/Aug/2024 18:08:23] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:08:27,060 - Bot: You are a friendly companion who talks to a child who is not fluent in Korean.
+2024-08-24 18:08:27,062 - 127.0.0.1 - - [24/Aug/2024 18:08:27] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:08:35,934 - 127.0.0.1 - - [24/Aug/2024 18:08:35] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:08:50,130 - Bot: You are a friendly companion who talks to a child who is not fluent in Korean.
+2024-08-24 18:08:50,132 - 127.0.0.1 - - [24/Aug/2024 18:08:50] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:09:50,094 - 127.0.0.1 - - [24/Aug/2024 18:09:50] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:10:04,159 - Bot: You are a friendly companion who talks to a child who is not fluent in Korean.
+2024-08-24 18:10:04,160 - 127.0.0.1 - - [24/Aug/2024 18:10:04] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:10:48,726 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 18:10:48,772 -  * Restarting with stat
+2024-08-24 18:10:49,031 -  * Debugger is active!
+2024-08-24 18:10:49,038 -  * Debugger PIN: 867-588-105
+2024-08-24 18:11:25,465 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 18:11:25,510 -  * Restarting with stat
+2024-08-24 18:11:30,847 -  * Restarting with stat
+2024-08-24 18:11:31,016 -  * Debugger is active!
+2024-08-24 18:11:31,021 -  * Debugger PIN: 867-588-105
+2024-08-24 18:11:39,108 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 18:11:39,137 -  * Restarting with stat
+2024-08-24 18:11:39,296 -  * Debugger is active!
+2024-08-24 18:11:39,301 -  * Debugger PIN: 867-588-105
+2024-08-24 18:21:14,384 - 127.0.0.1 - - [24/Aug/2024 18:21:14] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:21:43,943 - 127.0.0.1 - - [24/Aug/2024 18:21:43] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:21:45,229 -  * Detected change in '/Users/rickyhong/Desktop/Projects/ttobaki/chatBot/app.py', reloading
+2024-08-24 18:21:45,274 -  * Restarting with stat
+2024-08-24 18:21:45,532 -  * Debugger is active!
+2024-08-24 18:21:45,538 -  * Debugger PIN: 867-588-105
+2024-08-24 18:21:56,959 - 127.0.0.1 - - [24/Aug/2024 18:21:56] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:21:56,962 - User (greeting): 안녕
+2024-08-24 18:21:56,962 - Bot: 안녕? 너는 누구야?
+2024-08-24 18:21:56,962 - 127.0.0.1 - - [24/Aug/2024 18:21:56] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:01,348 - User (name): 홍윤기
+2024-08-24 18:22:01,348 - Bot: 홍윤기, 반가워! 너는 몇 살이야?
+2024-08-24 18:22:01,348 - 127.0.0.1 - - [24/Aug/2024 18:22:01] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:01,439 - User (age): 홍윤기
+2024-08-24 18:22:01,439 - Bot: 홍윤기살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 18:22:01,440 - 127.0.0.1 - - [24/Aug/2024 18:22:01] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:07,198 - 127.0.0.1 - - [24/Aug/2024 18:22:07] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:22:07,201 - User (greeting): 안녕
+2024-08-24 18:22:07,201 - Bot: 안녕? 너는 누구야?
+2024-08-24 18:22:07,201 - 127.0.0.1 - - [24/Aug/2024 18:22:07] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:07,436 - User (name): 안녕
+2024-08-24 18:22:07,436 - Bot: 안녕, 반가워! 너는 몇 살이야?
+2024-08-24 18:22:07,437 - 127.0.0.1 - - [24/Aug/2024 18:22:07] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:18,986 - 127.0.0.1 - - [24/Aug/2024 18:22:18] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:22:18,987 - User (age): 25
+2024-08-24 18:22:18,988 - Bot: 25살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 18:22:18,988 - 127.0.0.1 - - [24/Aug/2024 18:22:18] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:24,733 - 127.0.0.1 - - [24/Aug/2024 18:22:24] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:22:24,735 - User (friend_type): 게임 친구
+2024-08-24 18:22:24,735 - Bot: 좋아! 나는 너의 게임 친구가 될게!
+2024-08-24 18:22:24,736 - 127.0.0.1 - - [24/Aug/2024 18:22:24] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:29,706 - User (conversation): 그래
+2024-08-24 18:22:29,706 - Bot: 네, 어떤 걸 도와드릴까요?
+2024-08-24 18:22:29,707 - 127.0.0.1 - - [24/Aug/2024 18:22:29] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:30,602 - User (conversation): 그래
+2024-08-24 18:22:30,602 - Bot: 안녕하세요, 어떤 도움이 필요하신가요? 다양한 주제에 대해 대화하거나 정보를 제공할 수 있습니다.
+2024-08-24 18:22:30,603 - 127.0.0.1 - - [24/Aug/2024 18:22:30] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:22:37,726 - 127.0.0.1 - - [24/Aug/2024 18:22:37] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:22:38,080 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 18:22:38,084 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 18:22:38,106 - 127.0.0.1 - - [24/Aug/2024 18:22:38] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 18:22:38,107 - 127.0.0.1 - - [24/Aug/2024 18:22:38] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 18:22:38,365 - error_code=rate_limit_exceeded error_message='Rate limit reached for gpt-4 in organization org-nalhNzFCOM2deMAM1GTdM6kZ on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more.' error_param=None error_type=requests message='OpenAI API error received' stream_error=False
+2024-08-24 18:22:38,377 - 127.0.0.1 - - [24/Aug/2024 18:22:38] "[35m[1mPOST /speech HTTP/1.1[0m" 500 -
+2024-08-24 18:22:40,047 - User (conversation): 재밌게 나를 놀
+2024-08-24 18:22:40,047 - Bot: 아하는 게임이 있나요? 아님 재밌는 의문문을 드릴까요? 음식에 관한 다중 선택 문제를 해볼까요?
+2024-08-24 18:22:40,048 - 127.0.0.1 - - [24/Aug/2024 18:22:40] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:25:53,458 - 127.0.0.1 - - [24/Aug/2024 18:25:53] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:25:53,462 - User (greeting): 좀 기다릴 수가 있는
+2024-08-24 18:25:53,462 - Bot: 안녕? 너는 누구야?
+2024-08-24 18:25:53,466 - 127.0.0.1 - - [24/Aug/2024 18:25:53] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:25:56,669 - User (name): 초밥을
+2024-08-24 18:25:56,669 - Bot: 초밥을, 반가워! 너는 몇 살이야?
+2024-08-24 18:25:56,669 - 127.0.0.1 - - [24/Aug/2024 18:25:56] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:25:56,766 - User (age): 초밥을 더
+2024-08-24 18:25:56,766 - Bot: 초밥을 더살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 18:25:56,767 - 127.0.0.1 - - [24/Aug/2024 18:25:56] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:25:56,805 - User (friend_type): 초밥을 더
+2024-08-24 18:25:56,806 - Bot: 좋아! 나는 너의 초밥을 더가 될게!
+2024-08-24 18:25:56,806 - 127.0.0.1 - - [24/Aug/2024 18:25:56] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:26:03,858 - 127.0.0.1 - - [24/Aug/2024 18:26:03] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:26:08,658 - User (conversation): 원가 절감 시절에는 황새치
+2024-08-24 18:26:08,658 - Bot: "원가 절감 시절에는 황새치"라는 문장은 완성되지 않았습니다. 원가 절감을 위해 무엇을 했는지, 또는 어떻게 황새치와 관련이 있는지 등의 내용이 추가되어야 더 완전한 의미를 이해할 수 있을 것입니다. 예를 들어 "원가 절감 시절에는 황새치 대신 다른 저렴한 생선을 사용했다"와 같이 문장을 완성할 수 있습니다.
+2024-08-24 18:26:08,659 - 127.0.0.1 - - [24/Aug/2024 18:26:08] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:26:10,890 - User (conversation): 원가 절감 시절에는 황새치
+2024-08-24 18:26:10,890 - Bot: 원가 절감이 중요한 시기에는 황새치처럼 경제적인 선택을 하는 것이 필요합니다. 황새치는 가격 대비 풍부한 영양과 맛을 가진 생선으로, 저렴하게 다양한 요리를 만들 수 있습니다. 마찬가지로 원가 절감이 필요한 시기에는 비용 대비 효율적인 선택을 해야합니다. 예를 들어, 필수적이지 않은 비용을 줄이거나, 자원을 효율적으로 활용하는 등의 방법을 생각해보는 것이 좋습니다. 따라서, 이러한 상황에서는 황새치처럼 가성비 좋은 선택을 하도록 노력해야합니다.
+2024-08-24 18:26:10,891 - 127.0.0.1 - - [24/Aug/2024 18:26:10] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:26:17,343 - User (conversation): 원가 절감 시절에는 황새치
+2024-08-24 18:26:17,344 - Bot: 원가 절감 시절이란 비용을 줄이기 위한 시기를 말합니다. 여기서의 '황새치'는 일반적으로 깊은 바다에서 잡히는 대형 물고기를 의미하는데, 문장에서의 환경과 맥락에 따라 다르게 해석될 수 있습니다. 
+
+'황새치'라는 단어가 해당 문장에서 어떤 특별한 의미를 지닌 것인지, 또는 특정 상황을 설명하는 것인지 내용을 추가적으로 제공해주시면 더 정확한 해석이 가능합니다. 
+
+예를 들어, 원가 절감 시절에 황새치를 낚아 거래한다는 맥락이라면 황새치는 비싼 고급 물산품을 의미하는 것으로, 비용 절감을 위해 고급 상품을 유통하는 것으로 이해할 수 있습니다. 
+
+혹은 황새치로 대체품을 사용한다는 맥락이라면, 좀 더 저렴한 황새치를 이용해 원가를 절감하는 방법을 말하는 것일 수 있습니다. 
+
+따라서 보다 구체적인 해석을 원하신다면 문맥이나 맥락에 대한 추가적인 정보가 필요합니다.
+2024-08-24 18:26:17,345 - 127.0.0.1 - - [24/Aug/2024 18:26:17] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:26:46,574 - 127.0.0.1 - - [24/Aug/2024 18:26:46] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:26:46,577 - User (greeting): 안녕
+2024-08-24 18:26:46,577 - Bot: 안녕? 너는 누구야?
+2024-08-24 18:26:46,578 - 127.0.0.1 - - [24/Aug/2024 18:26:46] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:26:46,670 - User (name): 안녕
+2024-08-24 18:26:46,670 - Bot: 안녕, 반가워! 너는 몇 살이야?
+2024-08-24 18:26:46,671 - 127.0.0.1 - - [24/Aug/2024 18:26:46] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:26:59,959 - 127.0.0.1 - - [24/Aug/2024 18:26:59] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:26:59,963 - User (greeting): 안녕
+2024-08-24 18:26:59,963 - Bot: 안녕? 너는 누구야?
+2024-08-24 18:26:59,964 - 127.0.0.1 - - [24/Aug/2024 18:26:59] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:27:08,116 - 127.0.0.1 - - [24/Aug/2024 18:27:08] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:27:08,118 - User (name): 홍윤기
+2024-08-24 18:27:08,118 - Bot: 홍윤기, 반가워! 너는 몇 살이야?
+2024-08-24 18:27:08,119 - 127.0.0.1 - - [24/Aug/2024 18:27:08] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:27:17,461 - 127.0.0.1 - - [24/Aug/2024 18:27:17] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:27:17,463 - User (age): 25
+2024-08-24 18:27:17,463 - Bot: 25살이라니 멋지다! 나는 어떤 친구가 되어줄까?
+2024-08-24 18:27:17,463 - 127.0.0.1 - - [24/Aug/2024 18:27:17] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:27:23,190 - 127.0.0.1 - - [24/Aug/2024 18:27:23] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:27:23,193 - User (friend_type): 좋은 친구
+2024-08-24 18:27:23,193 - Bot: 좋아! 나는 너의 좋은 친구가 될게!
+2024-08-24 18:27:23,194 - 127.0.0.1 - - [24/Aug/2024 18:27:23] "POST /speech HTTP/1.1" 200 -
+2024-08-24 18:27:28,801 - 127.0.0.1 - - [24/Aug/2024 18:27:28] "OPTIONS /speech HTTP/1.1" 200 -
+2024-08-24 18:27:30,079 - User (conversation): 그래
+2024-08-24 18:27:30,079 - Bot: 안녕하세요! 어떻게 도와드릴 수 있을까요?
+2024-08-24 18:27:30,080 - 127.0.0.1 - - [24/Aug/2024 18:27:30] "POST /speech HTTP/1.1" 200 -
+2024-08-26 02:28:31,877 - Messages sent to OpenAI: [{'role': 'system', 'content': '당신은 한국어가 서툰 아이들에게 식당에서 예의 바르게 주문하는 방법을 상냥하게 가르쳐 주는 어른입니다. 아이가 말하는 음식의 식당 주인이 되어 아이와 대화하세요. 대화는 아이와 진행하기 때문에 친절하고 짧게. '}, {'role': 'user', 'content': '싫어요 꺼져요'}]
+2024-08-26 02:28:32,669 - 유저: 싫어요 꺼져요 / 챗봇: 그렇구나, 주문하기가 좀 어렵지? 내가 도와줄게. 우리 천천히 해보자. 뭐 먹고 싶어? / 단계: conversation

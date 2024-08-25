@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>음성 인식 챗봇</title>
+    <title>챗봇 선택</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -15,131 +15,42 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
             color: #333;
-            overflow: hidden;
         }
 
         h1 {
-            margin: 20px;
+            margin-bottom: 40px;
             font-size: 24px;
             color: #4A90E2;
+            text-align: center;
         }
 
-        #chat {
-            width: 100%;
-            max-width: 600px;
-            height: 800px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-            position: relative;
+        .btn-container {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .initial-message {
-            font-size: 18px;
-            color: #888;
-            text-align: center;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        .user-message, .bot-message {
-            width: 100%;
-            display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 20px;
         }
 
-        .user-message {
-            justify-content: flex-end;
-        }
-
-        .bot-message {
-            justify-content: flex-start;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #4A90E2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .bot-avatar {
-            background-color: #F5A623;
-        }
-
-        .message-content {
-            max-width: 70%;
-            background-color: #E1F5FE;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 16px;
-            line-height: 1.4;
-        }
-
-        .bot-message .message-content {
-            background-color: #FFF59D;
-        }
-
-        .timestamp {
-            font-size: 12px;
-            color: #999;
-            margin-top: 5px;
-        }
-
-        button {
-            width: 80%;
-            max-width: 600px;
-            padding: 15px;
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
             font-size: 18px;
             cursor: pointer;
             background-color: #4A90E2;
             color: white;
             border: none;
             border-radius: 30px;
-            margin: 20px 0;
+            text-decoration: none;
+            text-align: center;
+            width: 300px;
             transition: background-color 0.3s;
         }
 
-        button:hover {
+        .btn:hover {
             background-color: #357ABD;
         }
 
-        /* 마이크 토글 버튼 (우측 상단) */
-        .mic-toggle {
-            position: absolute;
-            top: 20px;
-            right: 70px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #4A90E2;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 50%;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, color 0.3s;
-            display: none;
-        }
-
-        .mic-toggle:hover {
-            background-color: #f5f5f5;
-        }
-
-        /* 톱니바퀴 버튼 (우측 상단) */
         .settings-icon {
             position: absolute;
             top: 20px;
@@ -158,7 +69,6 @@
             background-color: #f5f5f5;
         }
 
-        /* 설정 모달 */
         .modal {
             display: none;
             position: fixed;
@@ -166,9 +76,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             transition: background-color 0.3s ease;
             z-index: 1000;
         }
@@ -176,158 +86,22 @@
         .modal-content {
             background-color: white;
             padding: 20px;
-            border-radius: 0 0 15px 15px;
+            border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 100%;
+            width: 80%;
             max-width: 400px;
-            transform: translateY(-100%);
+            transform: translateY(-200px);
             opacity: 0;
             transition: transform 0.5s ease, opacity 0.5s ease;
-        }
-
-        .modal.open {
-            display: flex;
-            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal.open .modal-content {
             transform: translateY(0);
             opacity: 1;
         }
-
-        .modal.fade-out {
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .modal.fade-out .modal-content {
-            transform: translateY(-100%);
-            opacity: 0;
-        }
     </style>
     <script>
-        let recognition;
-        let isRecognizing = false;
-        let conversationHistory = [];
-        let stage = 'greeting';
-
-        function initializeRecognition() {
-            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'ko-KR';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-            recognition.continuous = true;
-
-            recognition.onstart = () => {
-                isRecognizing = true;
-                document.querySelector('.initial-message').style.display = 'none';
-                document.getElementById('start-button').innerText = '대화 초기화';
-                document.querySelector('.mic-toggle').style.display = 'block';
-                document.querySelector('.mic-toggle').innerText = '🔊';
-                document.querySelector('.mic-toggle').setAttribute('title', '마이크 끄기');
-            };
-
-            recognition.onresult = (event) => {
-                const userInput = event.results[event.resultIndex][0].transcript;
-                document.getElementById('chat').innerHTML += `
-                    <div class="user-message">
-                        <div class="message-content">
-                            ${userInput}
-                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-                        </div>
-                        <div class="avatar">나</div>
-                    </div>`;
-                conversationHistory.push({"role": "user", "content": userInput});
-                sendToServer();
-                scrollToBottom(); // 대화 추가 시 스크롤을 맨 아래로 이동
-            };
-
-            recognition.onend = () => {
-                if (isRecognizing) {
-                    recognition.start(); // 자동으로 다시 시작
-                } else {
-                    document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
-                }
-            };
-
-            recognition.onerror = (event) => {
-                isRecognizing = false;
-                document.getElementById('chat').innerHTML += `<p>오류: ${event.error}</p>`;
-            };
-        }
-
-        function startConversation() {
-            if (!recognition) initializeRecognition();
-
-            if (isRecognizing) {
-                resetConversation();
-            } else {
-                recognition.start();
-                document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
-            }
-        }
-
-        function toggleMic() {
-            if (isRecognizing) {
-                recognition.stop();
-                document.querySelector('.mic-toggle').innerText = '🔇';
-                document.querySelector('.mic-toggle').setAttribute('title', '마이크 켜기');
-                isRecognizing = false;
-            } else {
-                recognition.start();
-                document.querySelector('.mic-toggle').innerText = '🔊';
-                document.querySelector('.mic-toggle').setAttribute('title', '마이크 끄기');
-                isRecognizing = true;
-            }
-        }
-
-        function endConversation() {
-            if (isRecognizing && recognition) {
-                isRecognizing = false;
-                recognition.stop();
-            } else {
-                document.getElementById('chat').innerHTML += `<p>마이크가 이미 꺼져 있습니다.</p>`;
-            }
-        }
-
-        function sendToServer() {
-            fetch('/speech', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({conversation_history: conversationHistory, stage: stage})
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('chat').innerHTML += `
-                    <div class="bot-message">
-                        <div class="bot-avatar avatar">봇</div>
-                        <div class="message-content">
-                            ${data.response}
-                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-                        </div>
-                    </div>`;
-                conversationHistory = data.conversation_history;
-                stage = data.stage;
-                scrollToBottom(); // 대화 추가 시 스크롤을 맨 아래로 이동
-            })
-            .catch(error => {
-                console.error('Fetch 오류:', error);
-                document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
-            });
-        }
-
-        function resetConversation() {
-            conversationHistory = [];
-            stage = 'greeting';
-            document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
-            document.getElementById('start-button').innerText = '대화 시작하기';
-            document.querySelector('.mic-toggle').style.display = 'none';
-            document.querySelector('.mic-toggle').innerText = '🔇';
-            document.querySelector('.mic-toggle').setAttribute('title', '마이크 켜기');
-            isRecognizing = false;
-            if (recognition) recognition.stop();
-        }
-
         function toggleSettings() {
             const modal = document.getElementById('settings-modal');
             if (modal.classList.contains('open')) {
@@ -345,12 +119,6 @@
             window.location.href = 'https://main--ttobaki.netlify.app/';
         }
 
-        function scrollToBottom() {
-            const chatContainer = document.getElementById('chat');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        // 모달 바깥 클릭 시 닫기
         document.addEventListener('click', function(event) {
             const modal = document.getElementById('settings-modal');
             if (modal.classList.contains('open') && !event.target.closest('.modal-content') && !event.target.closest('.settings-icon')) {
@@ -360,19 +128,15 @@
     </script>
 </head>
 <body>
-    <h1>음성 인식 챗봇</h1>
-    <div id="chat">
-        <div class="initial-message">"안녕하세요"라고 말해보세요!</div>
+    <h1>챗봇을 선택하세요</h1>
+
+    <div class="btn-container">
+        <a href="/chat" class="btn">일반 대화 챗봇</a>
+        <a href="/situation" class="btn">상황별 대화 챗봇</a>
     </div>
-    <button id="start-button" onclick="startConversation()">🎤 대화 시작하기</button>
 
-    <!-- 마이크 토글 버튼 (우측 상단 설정 아이콘 옆) -->
-    <div class="mic-toggle" onclick="toggleMic()" title="마이크 켜기">🔇</div>
-
-    <!-- 설정 아이콘 (우측 상단) -->
     <div class="settings-icon" onclick="toggleSettings()" title="설정 열기">⚙️</div>
 
-    <!-- 설정 모달 -->
     <div id="settings-modal" class="modal">
         <div class="modal-content">
             <h2>설정</h2>
