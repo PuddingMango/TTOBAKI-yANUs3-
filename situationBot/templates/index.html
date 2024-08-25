@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상황별 챗봇</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        button, select {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #chat {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+    <script>
+        let recognition;
+        let isRecognizing = false;
+        let conversationHistory = [];
+        let stage = 'conversation';
+        let selectedSituation = null;
+        let situationMessageSent = false; // 상황 메시지가 이미 전송되었는지 여부 확인
+
+        function initializeRecognition() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'ko-KR';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            recognition.continuous = true; // 음성 인식을 계속 유지
+
+            recognition.onstart = () => isRecognizing = true;
+
+            recognition.onresult = (event) => {
+                const userInput = event.results[event.resultIndex][0].transcript;
+                document.getElementById('chat').innerHTML += `<p>유저: ${userInput}</p>`;
+                conversationHistory.push({"role": "user", "content": userInput});
+                sendToServer(userInput, true);
+            };
+
+            recognition.onend = () => {
+                if (isRecognizing) {
+                    recognition.start(); // 자동으로 다시 시작
+                } else {
+                    document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
+                }
+            };
+
+            recognition.onerror = (event) => {
+                isRecognizing = false;
+                document.getElementById('chat').innerHTML += `<p>오류: ${event.error}</p>`;
+            };
+        }
+
+        function startConversation() {
+            selectedSituation = document.getElementById('situation').value;
+            if (!selectedSituation) {
+                alert("상황을 선택해주세요.");
+                return;
+            }
+
+            if (!situationMessageSent) {
+                document.getElementById('chat').innerHTML += `<p>챗봇: ${getInitialMessage(selectedSituation)}</p>`;
+                situationMessageSent = true; // 상황 메시지가 이미 전송되었음을 표시
+            }
+
+            if (!recognition) initializeRecognition();
+            recognition.start();
+            document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
+            // 메세지 전송 없이 바로 음성 인식 시작
+        }
+
+        function getInitialMessage(situation) {
+            switch(situation) {
+                case "식당에서 밥을 먹으러 갔을 때":
+                    return "식당에서는 예의 바르게 주문을 해야 해요. '안녕하세요, 저는 ~~를 주문할게요' 라고 말하면 좋아요. 그 외에도 궁금한 게 있다면 알려주세요!";
+                case "학교에서 선생님과 대화할 때":
+                    return "선생님과 대화할 때는 공손하게, '선생님, 질문이 있습니다'처럼 시작해보세요. 더 궁금한 것이 있나요?";
+                case "모르는 사람에게 길을 물어볼 때":
+                    return "모르는 사람에게 길을 물어볼 때는 먼저 '실례합니다, 길 좀 여쭤봐도 될까요?'라고 정중히 물어보세요. 다른 상황이 궁금하신가요?";
+                case "사람들이 많은 장소를 이용할 때":
+                    return "사람이 많은 장소에서는 주변 사람들을 배려하며 움직이고, 조용히 대화를 나누는 것이 좋아요. 추가로 궁금한 점이 있다면 물어보세요!";
+                default:
+                    return "상황에 맞는 적절한 대화를 시작해봅시다!";
+            }
+        }
+
+        function endConversation() {
+            if (isRecognizing && recognition) {
+                isRecognizing = false;
+                recognition.stop();
+            } else {
+                document.getElementById('chat').innerHTML += `<p>마이크가 이미 꺼져 있습니다.</p>`;
+            }
+        }
+
+        function sendToServer(userInput = "", isVoice = false) {
+            fetch('/speech', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    conversation_history: conversationHistory,
+                    stage: stage,
+                    situation: selectedSituation,
+                    user_input: userInput,
+                    is_voice: isVoice
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('chat').innerHTML += `<p>챗봇: ${data.response}</p>`;
+                conversationHistory = data.conversation_history;
+                stage = data.stage;
+            })
+            .catch(error => {
+                console.error('Fetch 오류:', error);
+                document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
+            });
+        }
+
+        function resetConversation() {
+            conversationHistory = [];
+            stage = 'conversation';
+            selectedSituation = null;
+            situationMessageSent = false; // 메시지 전송 상태를 초기화
+            document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
+            document.getElementById('situation').value = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>상황별 챗봇</h1>
+    <label for="situation">상황을 선택해주세요:</label>
+    <select id="situation">
+        <option value="">--상황 선택--</option>
+        <option value="식당에서 밥을 먹으러 갔을 때">식당에서 밥을 먹으러 갔을 때</option>
+        <option value="학교에서 선생님과 대화할 때">학교에서 선생님과 대화할 때</option>
+        <option value="모르는 사람에게 길을 물어볼 때">모르는 사람에게 길을 물어볼 때</option>
+        <option value="사람들이 많은 장소를 이용할 때">사람들이 많은 장소를 이용할 때</option>
+    </select>
+    <button onclick="startConversation()">대화 시작</button>
+    <button onclick="endConversation()">마이크 끄기</button>
+    <button onclick="resetConversation()">처음부터</button>
+    <div id="chat"></div>
+</body>
+</html>
