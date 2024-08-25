@@ -16,9 +16,15 @@ const Home = () => {
   }, [cookies.language]);
 
   const handleSlideComplete = (path) => {
-    navigate(path);
+    if (path.startsWith('http')) {
+      // 절대 경로일 경우 window.location.href 사용
+      window.location.href = path;
+    } else {
+      // 상대 경로일 경우 기존 navigate 사용
+      navigate(path);
+    }
   };
-
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -107,7 +113,7 @@ const Home = () => {
             duration="10 min"
             circleColor="#FF69B4"  // Pink for the circle
             barColor="#888"        // Medium gray for the bar
-            onComplete={() => handleSlideComplete('/free')}
+            onComplete={() => handleSlideComplete('http://localhost:5001/')}
           />
         </div>
       </div>

@@ -13,7 +13,9 @@ def convert_korean_age_to_number(korean_age):
     total = 0
     
     for word in words:
-        if word in korean_to_num:
+        if word.isdigit(): 
+            total += int(word)
+        elif word in korean_to_num:
             total += korean_to_num[word]
         elif word == "살":
             continue 

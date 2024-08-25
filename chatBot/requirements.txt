@@ -22,6 +22,7 @@ exceptiongroup==1.2.2
 executing==2.0.1
 fastapi==0.112.0
 Flask==3.0.3
+Flask-Cors==4.0.1
 frozenlist==1.4.1
 future==0.18.2
 h11==0.14.0
@@ -231,7 +232,7 @@ tqdm==4.66.5
 traitlets==5.14.3
 typing_extensions==4.12.2
 tzlocal==5.2
-urllib3==2.2.2
+urllib3==1.26.16
 uvicorn==0.30.6
 wcwidth==0.2.13
 Werkzeug==3.0.3
