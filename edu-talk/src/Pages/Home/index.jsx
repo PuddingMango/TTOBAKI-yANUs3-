@@ -98,7 +98,7 @@ const Home = () => {
             duration="5 min"
             circleColor="#4A90E2"  // Blue for the circle
             barColor="#AAA"        // Light gray for the bar
-            onComplete={() => handleSlideComplete('/Ex-Situation')}
+            onComplete={() => handleSlideComplete(serverUrl+'/situation')}
           />
         </div>
       </div>
@@ -114,7 +114,8 @@ const Home = () => {
             duration="10 min"
             circleColor="#FF69B4"  // Pink for the circle
             barColor="#888"        // Medium gray for the bar
-            onComplete={() => handleSlideComplete(serverUrl)}
+            onComplete={() => handleSlideComplete(serverUrl+'/chat'
+            )}
           />
         </div>
       </div>
