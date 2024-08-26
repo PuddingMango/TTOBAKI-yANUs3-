@@ -8,6 +8,7 @@ from utils.name_extraction import extract_name_from_text
 from utils.prompt_utils import get_preprompt_for_situation
 from config import OPENAI_API_KEY
 import openai
+import os
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -138,5 +139,6 @@ def situation_speech():
         conversation_logger.error(f"오류 발생: {e}")
         return jsonify({"response": "서버에서 문제가 발생했습니다. 다시 시도해주세요."}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port)
