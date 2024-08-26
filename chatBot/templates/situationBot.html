@@ -40,7 +40,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             margin-left: auto;
-            white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+            white-space: nowrap;
         }
 
         .button-container {
@@ -53,7 +53,7 @@
         }
 
         .bottom-buttons {
-            display: none; /* 처음에는 보이지 않도록 설정 */
+            display: none;
             justify-content: center;
             gap: 10px;
             width: 100%;
@@ -209,166 +209,167 @@
         }
 
     </style>
-    <script>
-        let recognition;
-        let isRecognizing = false;
-        let conversationHistory = [];
-        let stage = 'conversation';
-        let selectedSituation = null;
-        let situationMessageSent = false;
+   <script>
+    let recognition;
+    let isRecognizing = false;
+    let conversationHistory = [];
+    let stage = 'greeting';
+    let selectedSituation = null;
+    function initializeRecognition() {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'ko-KR';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-        function initializeRecognition() {
-            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'ko-KR';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-            recognition.continuous = true;
+    recognition.onstart = () => {
+        isRecognizing = true;
+        document.getElementById('toggle-mic').innerText = '마이크 끄기';
+    };
 
-            recognition.onstart = () => {
-                isRecognizing = true;
-                document.getElementById('toggle-mic').innerText = '마이크 끄기';
-            };
-
-            recognition.onresult = (event) => {
-                const userInput = event.results[event.resultIndex][0].transcript;
-                document.getElementById('chat').innerHTML += `<p>유저: ${userInput}</p>`;
-                conversationHistory.push({"role": "user", "content": userInput});
-                sendToServer(userInput, true);
-            };
-
-            recognition.onend = () => {
-                if (isRecognizing) {
-                    recognition.start();
-                } else {
-                    document.getElementById('toggle-mic').innerText = '마이크 켜기';
-                    document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
-                }
-            };
-
-            recognition.onerror = (event) => {
-                isRecognizing = false;
-                document.getElementById('chat').innerHTML += `<p>오류: ${event.error}</p>`;
-            };
+    recognition.onresult = (event) => {
+        const userInput = event.results[event.resultIndex][0].transcript;
+        document.getElementById('chat').innerHTML += `<p>유저: ${userInput}</p>`;
+        
+        // conversationHistory가 배열인지 확인
+        if (!Array.isArray(conversationHistory)) {
+            conversationHistory = [];
         }
 
-        function startConversation() {
-            selectedSituation = document.getElementById('selected-situation').innerText;
-            if (!selectedSituation || selectedSituation === '--상황 선택--') {
-                alert("상황을 선택해주세요.");
-                return;
-            }
+        conversationHistory.push({"role": "user", "content": userInput});
+        sendToServer(userInput);
+    };
 
-            if (!situationMessageSent) {
-                document.getElementById('chat').innerHTML += `<p>챗봇: ${getInitialMessage(selectedSituation)}</p>`;
-                situationMessageSent = true;
-            }
+    audio.onended = () => {
+    if (!isRecognizing) {
+        recognition.start();
+    }
+};
 
+    recognition.onerror = (event) => {
+        isRecognizing = false;
+        document.getElementById('chat').innerHTML += `<p>오류: ${event.error}</p>`;
+    };
+}
+
+
+    function toggleMic() {
+        if (isRecognizing) {
+            recognition.stop();
+            isRecognizing = false;
+            document.getElementById('toggle-mic').innerText = '마이크 켜기';
+            document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
+        } else {
             if (!recognition) initializeRecognition();
             recognition.start();
+            isRecognizing = true;
+            document.getElementById('toggle-mic').innerText = '마이크 끄기';
             document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
-            document.querySelector('.bottom-buttons').style.display = 'flex';
+        }
+    }
+
+    function startConversation() {
+        selectedSituation = document.getElementById('selected-situation').innerText;
+        if (!selectedSituation || selectedSituation === '--상황 선택--') {
+            alert("상황을 선택해주세요.");
+            return;
         }
 
-        function getInitialMessage(situation) {
-            switch(situation) {
-                case "식당에서 밥을 먹으러 갔을 때":
-                    return "식당에서는 예의 바르게 주문을 해야 해요. '안녕하세요, 저는 ~~를 주문할게요' 라고 말하면 좋아요. 그 외에도 궁금한 게 있다면 알려주세요!";
-                case "학교에서 선생님과 대화할 때":
-                    return "선생님과 대화할 때는 공손하게, '선생님, 질문이 있습니다'처럼 시작해보세요. 더 궁금한 것이 있나요?";
-                case "모르는 사람에게 길을 물어볼 때":
-                    return "모르는 사람에게 길을 물어볼 때는 먼저 '실례합니다, 길 좀 여쭤봐도 될까요?'라고 정중히 물어보세요. 다른 상황이 궁금하신가요?";
-                case "사람들이 많은 장소를 이용할 때":
-                    return "사람이 많은 장소에서는 주변 사람들을 배려하며 움직이고, 조용히 대화를 나누는 것이 좋아요. 추가로 궁금한 점이 있다면 물어보세요!";
-                default:
-                    return "상황에 맞는 적절한 대화를 시작해봅시다!";
-            }
+        if (!recognition) initializeRecognition();
+        recognition.start();
+        document.getElementById('chat').innerHTML += `<p>마이크 ON</p>`;
+        document.querySelector('.bottom-buttons').style.display = 'flex';
+
+        // 초기 상황 메시지 출력
+        sendToServer("", false);
+    }
+    function sendToServer(userInput = "", isVoice = false) {
+    fetch('/situation/speech', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            conversation_history: conversationHistory,
+            stage: stage,
+            situation: selectedSituation,
+            user_input: userInput,
+            is_voice: isVoice
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('chat').innerHTML += `<p>챗봇: ${data.response}</p>`;
+        
+        if (data.audio_url) {
+            let audio = new Audio(data.audio_url);
+            audio.play();
+
+            audio.onended = () => {
+                if (!isRecognizing) {  // 이미 인식이 시작된 상태가 아닌 경우에만 start() 호출
+                    recognition.start();
+                }
+            };
         }
 
-        function toggleMic() {
-            if (isRecognizing) {
-                isRecognizing = false;
-                recognition.stop();
-            } else {
-                startConversation();
-            }
-        }
+        conversationHistory = data.conversation_history;
+        stage = data.stage;
+    })
+    .catch(error => {
+        console.error('Fetch 오류:', error);
+        document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
+    });
+}
 
-        function sendToServer(userInput = "", isVoice = false) {
-            fetch('/situation/speech', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    conversation_history: conversationHistory,
-                    stage: stage,
-                    situation: selectedSituation,
-                    user_input: userInput,
-                    is_voice: isVoice
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('chat').innerHTML += `<p>챗봇: ${data.response}</p>`;
-                conversationHistory = data.conversation_history;
-                stage = data.stage;
-            })
-            .catch(error => {
-                console.error('Fetch 오류:', error);
-                document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
-            });
-        }
+    function resetConversation() {
+        conversationHistory = [];
+        stage = 'greeting';
+        selectedSituation = null;
+        document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
+        document.getElementById('selected-situation').innerText = "--상황 선택--";
+        document.getElementById('start-button').style.opacity = '0';
+        setTimeout(() => document.getElementById('start-button').style.display = 'none', 500);
+        document.querySelector('.bottom-buttons').style.display = 'none';
+        document.getElementById('toggle-mic').innerText = '마이크 켜기';
+        isRecognizing = false;
+        if (recognition) recognition.stop();
+    }
 
-        function resetConversation() {
-            conversationHistory = [];
-            stage = 'conversation';
-            selectedSituation = null;
-            situationMessageSent = false;
-            document.getElementById('chat').innerHTML = `<p>대화 초기화</p>`;
-            document.getElementById('selected-situation').innerText = "--상황 선택--";
-            document.getElementById('start-button').style.opacity = '0';
-            setTimeout(() => document.getElementById('start-button').style.display = 'none', 500);
-            document.querySelector('.bottom-buttons').style.display = 'none';
-            document.getElementById('toggle-mic').innerText = '마이크 켜기';
-            isRecognizing = false;
-            if (recognition) recognition.stop();
-        }
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('open');
+    }
 
-        function toggleDropdown() {
-            const dropdown = document.querySelector('.dropdown');
-            dropdown.classList.toggle('open');
-        }
+    function selectSituation(situation) {
+        document.getElementById('selected-situation').innerText = situation;
+        const startButton = document.getElementById('start-button');
+        startButton.style.display = 'block';
+        setTimeout(() => startButton.style.opacity = '1', 10);
+        toggleDropdown();
+    }
 
-        function selectSituation(situation) {
-            document.getElementById('selected-situation').innerText = situation;
-            const startButton = document.getElementById('start-button');
-            startButton.style.display = 'block';
-            setTimeout(() => startButton.style.opacity = '1', 10);
-            toggleDropdown();
+    function toggleSettings() {
+        const modal = document.getElementById('settings-modal');
+        if (modal.classList.contains('open')) {
+            modal.classList.add('fade-out');
+            setTimeout(() => {
+                modal.classList.remove('open');
+                modal.classList.remove('fade-out');
+            }, 500);
+        } else {
+            modal.classList.add('open');
         }
+    }
 
-        function toggleSettings() {
-            const modal = document.getElementById('settings-modal');
-            if (modal.classList.contains('open')) {
-                modal.classList.add('fade-out');
-                setTimeout(() => {
-                    modal.classList.remove('open');
-                    modal.classList.remove('fade-out');
-                }, 500);
-            } else {
-                modal.classList.add('open');
-            }
+    function exitToHome() {
+        window.location.href = 'http://localhost:3000';
+    }
+
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('settings-modal');
+        if (modal.classList.contains('open') && !event.target.closest('.modal-content') && !event.target.closest('.settings-icon')) {
+            toggleSettings();
         }
+    });
+</script>
 
-        function exitToHome() {
-            window.location.href = 'http://localhost:3000';
-        }
-
-        document.addEventListener('click', function(event) {
-            const modal = document.getElementById('settings-modal');
-            if (modal.classList.contains('open') && !event.target.closest('.modal-content') && !event.target.closest('.settings-icon')) {
-                toggleSettings();
-            }
-        });
-    </script>
 </head>
 <body>
     <h1>상황별 챗봇</h1>

@@ -228,7 +228,16 @@
             };
 
             recognition.onresult = (event) => {
+                console.log("Before push, conversationHistory:", conversationHistory);
+                
+                // conversationHistory가 배열인지 확인
+                if (!Array.isArray(conversationHistory)) {
+                    console.error("conversationHistory is not an array:", conversationHistory);
+                    conversationHistory = []; // 배열로 초기화하여 문제를 회피할 수 있음
+                }
+
                 const userInput = event.results[event.resultIndex][0].transcript;
+
                 document.getElementById('chat').innerHTML += `
                     <div class="user-message">
                         <div class="message-content">
@@ -237,14 +246,19 @@
                         </div>
                         <div class="avatar">나</div>
                     </div>`;
+                
                 conversationHistory.push({"role": "user", "content": userInput});
+                console.log("After push, conversationHistory:", conversationHistory);
+
                 sendToServer();
-                scrollToBottom(); // 대화 추가 시 스크롤을 맨 아래로 이동
+                scrollToBottom();
             };
+
+
 
             recognition.onend = () => {
                 if (isRecognizing) {
-                    recognition.start(); // 자동으로 다시 시작
+                    recognition.stop(); // TTS가 끝나기 전에는 자동으로 다시 시작하지 않음
                 } else {
                     document.getElementById('chat').innerHTML += `<p>마이크 OFF</p>`;
                 }
@@ -280,41 +294,52 @@
                 isRecognizing = true;
             }
         }
-
-        function endConversation() {
-            if (isRecognizing && recognition) {
-                isRecognizing = false;
-                recognition.stop();
-            } else {
-                document.getElementById('chat').innerHTML += `<p>마이크가 이미 꺼져 있습니다.</p>`;
-            }
-        }
-
         function sendToServer() {
-            fetch('/chat/speech', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({conversation_history: conversationHistory, stage: stage})
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('chat').innerHTML += `
-                    <div class="bot-message">
-                        <div class="bot-avatar avatar">봇</div>
-                        <div class="message-content">
-                            ${data.response}
-                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-                        </div>
-                    </div>`;
-                conversationHistory = data.conversation_history;
-                stage = data.stage;
-                scrollToBottom(); // 대화 추가 시 스크롤을 맨 아래로 이동
-            })
-            .catch(error => {
-                console.error('Fetch 오류:', error);
-                document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
-            });
+    // TTS가 시작되기 전에 음성 인식을 중지하고, 마이크를 수동으로 다시 켤 수 있게 함.
+    recognition.stop();
+    isRecognizing = false;
+    document.querySelector('.mic-toggle').innerText = '🔇';
+    document.querySelector('.mic-toggle').setAttribute('title', 'TTS 재생 중');
+
+    console.log("Before sending to server, conversationHistory:", conversationHistory);
+
+    fetch('/chat/speech', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({conversation_history: conversationHistory, stage: stage})
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('chat').innerHTML += `
+            <div class="bot-message">
+                <div class="bot-avatar avatar">봇</div>
+                <div class="message-content">
+                    ${data.response}
+                    <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                </div>
+            </div>`;
+        conversationHistory = data.conversation_history;
+        stage = data.stage;
+        
+        // TTS 오디오 재생
+        if (data.audio_url) {
+            let audio = new Audio(data.audio_url);
+            audio.play();
+
+            // 음성 재생이 끝난 후 음성 인식을 자동으로 다시 시작하지 않음
+            audio.onended = () => {
+                document.querySelector('.mic-toggle').innerText = '🔇';
+                document.querySelector('.mic-toggle').setAttribute('title', '마이크 수동으로 켜기');
+            };
         }
+        scrollToBottom();
+    })
+    .catch(error => {
+        console.error('Fetch 오류:', error);
+        document.getElementById('chat').innerHTML += `<p>서버 오류: ${error.message}</p>`;
+    });
+}
+
 
         function resetConversation() {
             conversationHistory = [];
@@ -341,10 +366,6 @@
             }
         }
 
-        function exitToHome() {
-            window.location.href = 'http://localhost:3000';
-        }
-
         function scrollToBottom() {
             const chatContainer = document.getElementById('chat');
             chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -362,12 +383,12 @@
 <body>
     <h1>음성 인식 챗봇</h1>
     <div id="chat">
-        <div class="initial-message">"안녕하세요"라고 말해보세요!</div>
+        <div class="initial-message">"안녕"이라고 말해보세요!</div>
     </div>
     <button id="start-button" onclick="startConversation()">🎤 대화 시작하기</button>
 
     <!-- 마이크 토글 버튼 (우측 상단 설정 아이콘 옆) -->
-    <div class="mic-toggle" onclick="toggleMic()" title="마이크 켜기">🔇</div>
+    <div class="mic-toggle" onclick="toggleMic()" title="마이크 수동으로 켜기">🔇</div>
 
     <!-- 설정 아이콘 (우측 상단) -->
     <div class="settings-icon" onclick="toggleSettings()" title="설정 열기">⚙️</div>
@@ -381,3 +402,6 @@
     </div>
 </body>
 </html>
+
+
+
